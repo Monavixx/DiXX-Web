@@ -1,5 +1,4 @@
 import {useState, useEffect, useRef} from 'react';
-import Cookies from 'js-cookie';
 import {post_request, get_request} from './send_request';
 
 function LoginComponent() {

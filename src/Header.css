@@ -1,0 +1,39 @@
+.header {
+    width:100vw;
+    height:70px;
+    background-color: rgb(37, 38, 39);
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+}
+
+.header-menu-button {
+    width:50px;
+    height: 50px;
+    background-color: rgb(71, 73, 75);
+    border-radius: 30%;
+}
+.header-dixx {
+    margin-left: 100px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color:rgb(210, 217, 221);
+    text-shadow: 3px 2px 0px rgba(16, 16, 17, 0.685);
+}
+.header-user-image img{
+    height:50px;
+}
+.header-user-image {
+    background-color: rgb(16, 17, 17);
+    border-radius: 50%;
+    height:50px;
+    width:50px;
+}
+.header-user-right {
+    margin-left: auto;
+    margin-right: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
