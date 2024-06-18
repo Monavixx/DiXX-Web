@@ -1,19 +1,18 @@
 import {useState, useEffect, useRef} from 'react';
 import Cookies from 'js-cookie';
+import {post_request, get_request} from './send_request';
 
 function LoginComponent() {
     let [data, setData] = useState(null);
+    let [isLoading, setIsLoading] = useState(false);
     let username = useRef(null);
     let password = useRef(null);
 
     useEffect(()=>{
         async function inner(){
-            let _data = await (await fetch('http://localhost:3001/login/?format=json', { 
-                headers:{
-                    "Access-Control-Allow-Origin": '*',
-                },
-                credentials:'include'
-            })).json();
+            setIsLoading(true);
+            let _data = await (await get_request('http://localhost:3001/login/')).json();
+            setIsLoading(false);
             setData(_data);
             console.log(document.cookie);
         };inner();
@@ -21,29 +20,26 @@ function LoginComponent() {
 
     function login() {
         async function inner() {
-            let _data = await fetch('http://localhost:3001/login/', {
-                method:'POST',
-                credentials:'include',
-                headers: {
-                    'content-type': 'application/json',
-                    "Accept": 'application/json',
-                    "X-CSRFToken": Cookies.get('csrftoken'),
-                    "Access-Control-Allow-Origin": '*',
-                    "Cookie": document.cookie
-                },
-                body: JSON.stringify({username: username.current.value, password: password.current.value})
-            });
+            setIsLoading(true);
+            let _data = post_request('http://localhost:3001/login/',
+                {username: username.current.value, password: password.current.value});
 
-            setData(await _data.json());
+            setData(await (await _data).json());
+            setIsLoading(false);
         }
-        inner();
-        console.log(document.cookie);
-        
+        inner();        
     }
+    if(isLoading)return (<p>Loading...</p>);
     
     return (
         <div className="logincomponent">
-            {data?.success ? "auth" : 
+            {data?.success ? 
+                <div>
+                    <p>auth</p>
+                    <p>username: {data?.username}</p>
+                    <p>email: {data?.email}</p>
+                </div>
+            : 
                 <div className="form">
                     <input ref={username} type="text" placeholder='username'/>
                     <input ref={password} type="password" placeholder='password'/>
