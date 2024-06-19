@@ -1,14 +1,14 @@
 
 import './App.css';
-import './LoginComponent.jsx'
-import LoginComponent from './LoginComponent.jsx';
+import LoginComponent from './components/LoginComponent.jsx';
 import {Routes, Route, useNavigate, useLocation} from 'react-router-dom';
-import Header from './Header.jsx';
+import Header from './components/Header.jsx';
 import { useEffect } from 'react';
 import { loginAction, pendingFalse } from './slices/userReducer.js';
 import { useDispatch, useSelector } from 'react-redux';
-import { get_request } from './send_request.js';
-import Profile from './Profile.jsx';
+import { get_request } from './functions/send_request.js';
+import Profile from './components/Profile.jsx';
+import SignUpComponent from './components/SignUpComponent.jsx';
 
 function App() {
   const dispatch = useDispatch();
@@ -19,11 +19,15 @@ function App() {
   
   useEffect(()=>{
     // Redirect to /login if user is not authenticated. Only if user's data from server is recieved
-    if(location.pathname !== '/login' && !is_authenticated && !isUserDataPending) {
+    /*if(location.pathname !== '/login' && !is_authenticated && !isUserDataPending) {
       navigate('/login');
-    }
+    }*/
+   
     // Redirect to /profile if user is authenticated
     if(location.pathname === '/login' && is_authenticated) {
+      navigate('/profile');
+    }
+    if(location.pathname === '/signup' && is_authenticated) {
       navigate('/profile');
     }
   },[location, isUserDataPending]);
@@ -51,6 +55,7 @@ function App() {
           <Route path='/' element={<h1>home</h1>} />
           <Route path='/login' element={<LoginComponent/>} />
           <Route path='/profile' element={<Profile/>}/>
+          <Route path='/signup' element={<SignUpComponent/>}/>
         </Routes>
       </div>
     </>

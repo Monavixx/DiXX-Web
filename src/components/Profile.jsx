@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux"
-import { logoutRequest } from "./functions/auth";
+import { logoutRequest } from "../functions/auth";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { logoutAction } from "../slices/userReducer";
 
 
 export default function Profile() {
@@ -21,7 +22,8 @@ export default function Profile() {
     },[isUserDataPending, is_authenticated]);
 
     function logout() {
-        const resp = logoutRequest(dispatch);
+        const resp = logoutRequest();
+        dispatch(logoutAction());
     }
     return (
         <div className="profile">

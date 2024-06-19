@@ -1,7 +1,5 @@
-import { get_request } from "../send_request";
-import { logoutAction } from "../slices/userReducer";
+import { get_request } from "../functions/send_request";
 
-export async function logoutRequest(dispatch) {
-    dispatch(logoutAction());
+export async function logoutRequest() {
     return await (await get_request('http://localhost:3001/logout/')).json();
 }

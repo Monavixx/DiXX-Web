@@ -1,14 +1,11 @@
 import {useState, useEffect, useRef} from 'react';
-import {post_request, get_request} from './send_request';
-import {useSelector, useDispatch} from 'react-redux';
-import { loginAction, logoutAction } from './slices/userReducer';
+import {post_request, get_request} from '../functions/send_request';
+import {useDispatch} from 'react-redux';
+import { loginAction, logoutAction } from '../slices/userReducer';
 import { useNavigate } from 'react-router-dom';
-import { logoutRequest } from './functions/auth';
+import { Link } from 'react-router-dom';
 
 function LoginComponent() {
-    const username = useSelector(state=>state.user.name);
-    const email = useSelector(state=>state.user.email);
-    const is_authenticated = useSelector(state=>state.user.is_authenticated);
     const dispatch = useDispatch();
     
     const navigate = useNavigate();
@@ -43,7 +40,7 @@ function LoginComponent() {
                 {username: usernameInput.current.value,
                  password: passwordInput.current.value})).json();
 
-            setMessage(_data.message);
+            
             if(_data.is_authenticated) {
                 dispatch(loginAction({name:_data.username,
                                 email:_data.email
@@ -54,28 +51,18 @@ function LoginComponent() {
         }
         inner();
     }     
-
-    function logout() {
-        async function inner() {
-            setIsLoading(true);
-            let _data = await logoutRequest(dispatch);
-            setMessage(_data.message);
-            setIsLoading(false);
-        }
-        inner(); 
-    }
-
     
     if(isLoading)return (<p>Loading...</p>);
     
     return (
         <div className="logincomponent">
-            <p>{message}</p>
+            <p>Please, log in</p>
             <div className="form">
                 <input ref={usernameInput} type="text" placeholder='username'/>
                 <input ref={passwordInput} type="password" placeholder='password'/>
                 <button onClick={login}>login</button>
             </div>
+            <Link to='/signup'>don't have an account?</Link>
         </div>
     );
 }
