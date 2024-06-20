@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { get_request } from './functions/send_request.js';
 import Profile from './components/Profile.jsx';
 import SignUpComponent from './components/SignUpComponent.jsx';
+import YourSetsComponent from './components/YourSetsComponent.jsx';
+import SetComponent from './components/SetComponent.jsx';
 
 function App() {
   const dispatch = useDispatch();
@@ -56,6 +58,8 @@ function App() {
           <Route path='/login' element={<LoginComponent/>} />
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/signup' element={<SignUpComponent/>}/>
+          <Route path='/your-sets' element={<YourSetsComponent/>}/>
+          <Route path='/your-sets/:id' element={<SetComponent/>}/>
         </Routes>
       </div>
     </>
