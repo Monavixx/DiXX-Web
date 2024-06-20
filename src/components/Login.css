@@ -1,0 +1,53 @@
+.logincomponent {
+    width:max-content;
+    background-color: rgb(26, 26, 27);
+    padding: 15px;
+    border-radius: 10%;
+}
+.login-h {
+    font-size: 1.4rem;
+    color: rgb(243, 245, 221);
+}
+.login-form {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    gap: 5px;
+    align-items: center;
+}
+.login-labels {
+    float:left;
+    font-size: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+    margin-right: 10px;
+    text-align: right;
+}
+.login-button {
+    width:50%;
+    font-size: 1.5rem;
+    background-color: rgb(62, 63, 62);
+    color:rgb(219, 219, 219);
+    border:0;
+    border-radius: 35%;
+    padding: 5px 0;
+    box-shadow: 0 0 7px black;
+    text-align: center;
+    margin-top:15px;
+    transform: translateX(20%);
+}
+.login-button:hover {
+    box-shadow: 0 0 4px rgba(201, 201, 201, 0.527);
+    background-color: rgba(72, 219, 128, 0.733);
+}
+.login-button:active {
+    box-shadow: 0 0 4px rgba(230, 228, 228, 0.527);
+    background-color: rgba(93, 235, 147, 0.788);
+}
+.login-ref-to-signup {
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: 0;
+    width: fit-content;
+}

@@ -13,7 +13,10 @@ let store = configureStore({
   }
 });
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+export let rootdom = document.getElementById('root');
+
+const root = ReactDOM.createRoot(rootdom);
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>

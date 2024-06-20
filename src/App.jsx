@@ -34,7 +34,7 @@ function App() {
 
   useEffect(()=>{
     async function inner(){
-        let _data = await (await get_request('http://localhost:3001/login/')).json();
+        let _data = await (await get_request('login/')).json();
         if(_data.is_authenticated) {
             dispatch(loginAction({
               name:_data.username,

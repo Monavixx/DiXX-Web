@@ -7,3 +7,50 @@
 .message-signup {
     color: red;
 }
+.signup {
+    background-color: rgb(26, 26, 27);
+    padding: 15px;
+    border-radius: 10%;
+    width:max-content;
+}
+.signup-labels {
+    float:left;
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 15px;
+    text-align: right;
+}
+
+.signup h1 {
+    text-align: center;
+}
+.signup-button {
+    width: 40%;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    position: relative;
+    font-size: 1.5rem;
+    background-color: rgb(62, 63, 62);
+    color:rgb(219, 219, 219);
+    border:0;
+    border-radius: 35%;
+    padding: 5px 0;
+    box-shadow: 0 0 7px black;
+    text-align: center;
+}
+.signup-button:hover {
+    box-shadow: 0 0 10px black;
+    background-color: rgba(94, 94, 94, 0.733);
+}
+.signup-button:active {
+    box-shadow: 0 0 12px black;
+    background-color: rgba(102, 102, 102, 0.788);
+}
+.signup-button-div {
+    clear:both;
+    width: auto;
+    position: relative;
+    margin-top: 15px;
+
+}

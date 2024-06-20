@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { logoutAction } from "../slices/userReducer";
 
+import "./Profile.css";
+
 
 export default function Profile() {
     const username = useSelector(state=>state.user.name);
@@ -22,16 +24,22 @@ export default function Profile() {
     },[isUserDataPending, is_authenticated]);
 
     function logout() {
-        const resp = logoutRequest();
-        dispatch(logoutAction());
+        async function inner() {
+            await logoutRequest();
+            dispatch(logoutAction());
+        }
+        inner();
     }
     return (
+        <>
         <div className="profile">
             <h1>Profile</h1>
-            <p>Username: {username}</p>
-            <p>Email: {email}</p>
-            <button onClick={logout}>logout</button>
+            <p className="profile-full-data">Username: 
+                <span className="profile-data"> {username}</span></p>
+            <p className="profile-full-data">Email: <span className="profile-data"> {email}</span></p>
+            <div className="button-logout-div"><button onClick={logout} className="profile-logout-button">logout</button></div>
         </div>
+        </>
     )
 }
 

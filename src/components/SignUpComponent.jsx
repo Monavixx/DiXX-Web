@@ -19,7 +19,7 @@ export default function SignUpComponent() {
             return;
         }
         async function inner() {
-            let _data = await post_request('http://localhost:3001/signup/', {
+            let _data = await post_request('signup/', {
                 username: usernameInput.current.value,
                 email: emailInput.current.value,
                 password: passwordInput.current.value
@@ -36,14 +36,24 @@ export default function SignUpComponent() {
     return (
         <div className="signup">
             <h1>Sign up</h1>
-            <div className="signup-form">
-                <input ref={usernameInput} type="text" placeholder="username"/>
-                <input ref={emailInput} type="email" placeholder="email" />
-                <input ref={passwordInput} type="password" placeholder="password"/>
-                <input ref={passwordAgainInput} type="password" placeholder="password again"/>
-                <button onClick={signUp}>Sign up</button>
-                <p className="message-signup">{message}</p>
+            <div className="signup-labels">
+                <div className="signup-label">Username:</div>
+                <div className="signup-label">Email:</div>
+                <div className="signup-label">Password: </div>
+                <div className="signup-label">Password again:</div>
             </div>
+            <div className="signup-form">
+                <input ref={usernameInput} type="text" placeholder="username"
+                    onKeyDown={(e)=>{if(e.key==='Enter')signUp()}}/>
+                <input ref={emailInput} type="email" placeholder="email" 
+                    onKeyDown={(e)=>{if(e.key==='Enter')signUp()}}/>
+                <input ref={passwordInput} type="password" placeholder="password"
+                    onKeyDown={(e)=>{if(e.key==='Enter')signUp()}}/>
+                <input ref={passwordAgainInput} type="password" placeholder="password again"
+                    onKeyDown={(e)=>{if(e.key==='Enter')signUp()}}/>
+            </div>
+            <div className="signup-button-div"><button onClick={signUp} className="signup-button">Sign up</button></div>
+            <p className="message-signup">{message}</p>
         </div>
     );
 }

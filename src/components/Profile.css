@@ -1,0 +1,43 @@
+.profile-full-data {
+    border-bottom: 1px dashed rgb(68, 69, 71);
+    width:auto;
+}
+.profile {
+    width: max-content;
+    
+    background-color: rgb(26, 26, 27);
+    padding: 15px;
+    border-radius: 10%;
+}
+.profile h1 {
+    text-align: center;
+}
+
+.profile-data {
+    font-size: 1.2em;
+    font-weight: bold;
+    color:rgb(221, 231, 235);
+    
+}
+
+.profile-logout-button {
+    font-size: 1.7rem;
+    background-color: rgb(211, 75, 75);
+    color:rgb(219, 219, 219);
+    border:0;
+    border-radius: 35%;
+    padding: 5px 25px;
+    box-shadow: 0 0 7px black;
+    text-align: center;
+}
+.profile-logout-button:hover {
+    box-shadow: 0 0 4px rgba(201, 201, 201, 0.527);
+    background-color: rgb(214, 95, 95);
+}
+.profile-logout-button:active {
+    box-shadow: 0 0 4px rgba(230, 228, 228, 0.527);
+    background-color: rgb(221, 115, 115);
+}
+.button-logout-div {
+    text-align: center;
+}
