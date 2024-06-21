@@ -83,7 +83,7 @@ export default function Header() {
                 </div>
                 <div className="menu-sets-refs">
                     <div className="menu-your-sets-ref menu-ref">
-                        <Link to='/your-sets'><div>Your sets</div></Link>
+                        <Link to='/sets/your'><div>Your sets</div></Link>
                     </div>
                     <div className="menu-learn-ref menu-ref">
                         <Link to='/learn'><div>Learn</div></Link>

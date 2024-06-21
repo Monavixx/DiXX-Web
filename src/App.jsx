@@ -58,8 +58,8 @@ function App() {
           <Route path='/login' element={<LoginComponent/>} />
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/signup' element={<SignUpComponent/>}/>
-          <Route path='/your-sets' element={<YourSetsComponent/>}/>
-          <Route path='/your-sets/:id' element={<SetComponent/>}/>
+          <Route path='/sets/your' element={<YourSetsComponent/>}/>
+          <Route path='/sets/:id' element={<SetComponent/>}/>
         </Routes>
       </div>
     </>

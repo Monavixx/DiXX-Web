@@ -1,0 +1,53 @@
+.your-sets {
+
+}
+.your-sets h1 {
+
+}
+.your-sets-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.your-sets-set {
+    background-color: rgb(29, 29, 31);
+    padding: 15px;
+    border-radius: 10px;
+}
+.your-sets-set h2 {
+    text-align: center;
+}
+.your-sets-set h2 a {
+    text-decoration: none;
+    color: inherit;
+}
+.your-sets-set h2 a:hover{
+    text-shadow: 0 5px 6px black;
+}
+.your-sets-set-author {
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-thickness: 2px;
+    text-decoration-color: rgb(139, 164, 185);
+    font-size: 1.1em;
+}
+
+.your-sets-set-link {
+    color: inherit;
+}
+.your-sets-set-link button {
+    width: 50%;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    background-color: rgb(56, 59, 63);
+    border: none;
+    color: inherit;
+    padding: 5px 0;
+}
+.your-sets-set-link button:hover {
+    background-color: rgb(70, 75, 80);
+    box-shadow: -2px 3px 3px black;
+}
+.your-sets-set-link button:active {
+    background-color: rgb(84, 90, 97);
+    box-shadow: 0px 1px 3px black;
+}
