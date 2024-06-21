@@ -1,38 +1,31 @@
 import {useState, useEffect, useRef} from 'react';
 import {post_request, get_request} from '../functions/send_request';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { loginAction, logoutAction } from '../slices/userReducer';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import './Login.css';
+import './css/Login.css';
+import { useEffectOnLoadUserData } from '../functions/useEffectOnLoadUserData';
 
 function LoginComponent() {
     const dispatch = useDispatch();
-    
     const navigate = useNavigate();
 
     let usernameInput = useRef(null);
     let passwordInput = useRef(null);
 
-    let [message, setMessage] = useState('');
-    let [isLoading, setIsLoading] = useState(true);
+    let [isLoading, setIsLoading] = useState(false);
+    const [searchParams] = useSearchParams();
 
-    useEffect(()=>{
-        async function inner(){
-            setIsLoading(true);
-            let _data = await (await get_request('login/')).json();
-            
-            setMessage(_data.message);
+    const is_authenticated = useSelector(state=>state.user.is_authenticated);
 
-            if(_data.is_authenticated) {
-                dispatch(loginAction({name:_data.username,
-                                email:_data.email
-                }));
-            }
-            setIsLoading(false);
+    useEffectOnLoadUserData(()=>{
+        if(is_authenticated) {
+            navigate('/profile');
+            return;
+        }
+    },[]);
 
-        };inner();
-    }, []);
     useEffect(()=>{
         if(!isLoading)
             passwordInput.current.value = '';
@@ -50,14 +43,17 @@ function LoginComponent() {
                 dispatch(loginAction({name:_data.username,
                                 email:_data.email
                 }));
+                if(searchParams.get('after_login') !== null) {
+                    navigate(searchParams.get('after_login'));
+                    return;
+                }
                 navigate('/profile');
+                return;
             }
             setIsLoading(false);
         }
         inner();
-    }     
-    
-    //if(isLoading)return (<p>Loading...</p>);
+    }
     
     return (
         <div className="logincomponent">

@@ -18,11 +18,9 @@ export let rootdom = document.getElementById('root');
 const root = ReactDOM.createRoot(rootdom);
 
 root.render(
-  <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
         <App />
       </Provider>
     </BrowserRouter>
-  </React.StrictMode>
 );

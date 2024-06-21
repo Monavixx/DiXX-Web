@@ -7,11 +7,14 @@
 .your-sets-container {
     display: flex;
     flex-wrap: wrap;
+    gap:15px;
 }
 .your-sets-set {
     background-color: rgb(29, 29, 31);
     padding: 15px;
     border-radius: 10px;
+    width:40%;
+    
 }
 .your-sets-set h2 {
     text-align: center;
@@ -34,8 +37,11 @@
 .your-sets-set-link {
     color: inherit;
 }
+.your-sets-set-div-link {
+    width: 35%;
+}
 .your-sets-set-link button {
-    width: 50%;
+    width: 100%;
     font-size: 1.5rem;
     border-radius: 10px;
     background-color: rgb(56, 59, 63);
@@ -50,4 +56,19 @@
 .your-sets-set-link button:active {
     background-color: rgb(84, 90, 97);
     box-shadow: 0px 1px 3px black;
+}
+
+.your-sets-button-and-created-by {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.your-sets-set-created-by-and-number-of-cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    align-items: end;
+}
+.your-sets-set-description {
+    overflow-wrap: break-word;
 }

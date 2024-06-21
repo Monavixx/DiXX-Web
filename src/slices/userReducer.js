@@ -24,11 +24,11 @@ export const userSlice = createSlice({
             state.is_authenticated = false;
             state.is_pending = false;
         },
-        pendingFalse: (state, action)=>{
-            state.is_pending = false;
+        pending: (state, action)=>{
+            state.is_pending = Boolean(action.payload);
         }
     }
 });
 
-export const { loginAction, logoutAction, pendingFalse } = userSlice.actions;
+export const { loginAction, logoutAction, pending } = userSlice.actions;
 export default userSlice.reducer;

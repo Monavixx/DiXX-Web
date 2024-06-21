@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams, createSearchParams } from "react-router-dom";
 import { get_request } from "../functions/send_request";
+import { useSelector } from "react-redux";
+import './css/Set.css';
+import { useEffectOnLoadUserData } from "../functions/useEffectOnLoadUserData";
 
 export default function SetComponent() {
     const {id} = useParams();
@@ -9,8 +12,15 @@ export default function SetComponent() {
     const [isLearning, setIsLearning] = useState(false);
     const [card, setCard] = useState(null);
     const [isShowSecond, setIsShowSecond] = useState(false);
+    const is_authenticated = useSelector(state=>state.user.is_authenticated);
+    const navigate = useNavigate();
+    const location = useLocation();
     
-    useEffect(()=>{
+    useEffectOnLoadUserData(()=>{
+        if(!is_authenticated) {
+            navigate({pathname: '/login', search: createSearchParams({'after_login':location.pathname}).toString()});
+            return;
+        }
         async function inner() {
             setIsLoading(true);
             const _data = await (await get_request(`cards/sets/${id}/`)).json();
@@ -37,6 +47,11 @@ export default function SetComponent() {
     function showSecond() {
         setIsShowSecond(true);
     }
+    function datetimeFormat() {
+        let res = set.create_datetime.split('.')[0];
+        res.replace('T',' ');
+        return res;
+    }
 
 
     if(isLoading) return "Loading...";
@@ -54,10 +69,12 @@ export default function SetComponent() {
     }
 
     return (
-        <div>
+        <div className="set-info-container">
             <h1>{set.name}</h1>
-            <p>Description: {set.description}</p>
-            <p>{`(created by ${set.author} at ${set.create_datetime})`}</p>
+            <div className="set-info-label-description">Description</div>
+            <div className="set-info-description">{set.description}</div>
+            <div>{`Created by ${set.author}`}</div>
+            <div className="set-info-at">{`at ${datetimeFormat()}`}</div>
             <button onClick={learn}>Learn</button>
         </div>
     );

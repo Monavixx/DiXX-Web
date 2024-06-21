@@ -1,7 +1,9 @@
 import { useRef, useState } from "react";
-import './SignUp.css';
+import './css/SignUp.css';
 import { post_request } from "../functions/send_request";
 import { useNavigate } from "react-router-dom";
+import { useEffectOnLoadUserData } from "../functions/useEffectOnLoadUserData";
+import { useSelector } from "react-redux";
 
 export default function SignUpComponent() {
     let usernameInput = useRef(null);
@@ -12,6 +14,15 @@ export default function SignUpComponent() {
     const navigate = useNavigate();
 
     const [message, setMessage] = useState('');
+
+    const is_authenticated = useSelector(state=>state.user.is_authenticated);
+
+    useEffectOnLoadUserData(()=>{
+        if(is_authenticated) {
+            navigate('/profile');
+            return;
+        }
+    });
 
     function signUp() {
         if(passwordInput.current.value !== passwordAgainInput.current.value) {
@@ -27,6 +38,7 @@ export default function SignUpComponent() {
             _data = await _data.json();
             if(_data.success) {
                 navigate('/login');
+                return;
             }
             setMessage(_data.message);
         }

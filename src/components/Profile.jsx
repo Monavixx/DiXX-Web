@@ -2,29 +2,29 @@ import { useDispatch, useSelector } from "react-redux"
 import { logoutRequest } from "../functions/auth";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { logoutAction } from "../slices/userReducer";
+import { logoutAction, pending } from "../slices/userReducer";
 
-import "./Profile.css";
+import "./css/Profile.css";
+import { useEffectOnLoadUserData } from "../functions/useEffectOnLoadUserData";
 
 
 export default function Profile() {
     const username = useSelector(state=>state.user.name);
     const email = useSelector(state=>state.user.email);
-    const isUserDataPending = useSelector(state=>state.user.is_pending);
     const is_authenticated = useSelector(state=>state.user.is_authenticated);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(()=>{
-        if(!isUserDataPending) {
-            if(!is_authenticated) {
-                navigate('/login');
-            }
+    useEffectOnLoadUserData(()=>{
+        if(!is_authenticated) {
+            navigate('/login');
+            return;
         }
-    },[isUserDataPending, is_authenticated]);
+    },[]);
 
     function logout() {
         async function inner() {
+            dispatch(pending(true));
             await logoutRequest();
             dispatch(logoutAction());
         }

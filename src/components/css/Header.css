@@ -9,7 +9,7 @@
 
 
 .header-dixx{
-    margin-left: 100px;
+    margin-left: 170px;
 }
 .header-dixx a{
     font-size: 2.5rem;
@@ -62,7 +62,7 @@
     background-color: rgb(136, 136, 136);
 
     height: 3px;
-    border-radius: 30%;
+    border-radius: 5px;
     transition: 0.5s all;
 }
 .header-menu-button-toggle-on div{

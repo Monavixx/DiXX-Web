@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import './Header.css';
+import './css/Header.css';
 import {Link, useLocation} from 'react-router-dom';
 import React, {useRef, useEffect} from 'react';
 import {rootdom} from '../index.jsx';
@@ -8,6 +8,7 @@ import { API_URL } from '../settings.js';
 export default function Header() {
     const username = useSelector(state=>state.user.name);
     const is_authenticated = useSelector(state=>state.user.is_authenticated);
+    const isUserDataPending = useSelector(state=>state.user.is_pending);
     const menu = useRef(null);
     const menuButton = useRef(null);
     const menuButton2 = useRef(null);
@@ -22,9 +23,7 @@ export default function Header() {
     },[]);
 
     useEffect(()=>{
-        console.log();
         for(let v of document.getElementsByClassName('menu-ref')) {
-            //console.log(v.firstChild.href.slice(API_URL.length));
             if(location.pathname
                 === v.firstChild.href.slice(API_URL.length)) {
                 v.classList.add('menu-active-ref');
@@ -66,7 +65,7 @@ export default function Header() {
             <div className="header-dixx"><Link to='/'>DiXX</Link></div>
             <div className="header-user-right">
                 <div className='header-user-image'><Link to='/login'><img src='/anonymous-user-icon.png' alt="anonymous" /></Link></div>
-                <div className="header-username"><Link to='/login'>{username}</Link></div>
+                <div className="header-username"><Link to='/login'>{!isUserDataPending && username}</Link></div>
             </div>
         </div>
         <div className="menu menu-toggle-off" ref={menu}>
