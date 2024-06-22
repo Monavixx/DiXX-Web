@@ -5,7 +5,6 @@ export function useDidUpdateEffect(fn, inputs) {
   
     useEffect(() => {
       isMountingRef.current = true;
-      console.log('mount');
     }, []);
   
     useEffect(() => {

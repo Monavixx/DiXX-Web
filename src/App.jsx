@@ -1,11 +1,11 @@
 
 import './App.css';
 import LoginComponent from './components/LoginComponent.jsx';
-import {Routes, Route, useNavigate, useLocation, createSearchParams} from 'react-router-dom';
+import {Routes, Route, useLocation} from 'react-router-dom';
 import Header from './components/Header.jsx';
 import { useEffect } from 'react';
 import { loginAction, pending } from './slices/userReducer.js';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { get_request } from './functions/send_request.js';
 import Profile from './components/Profile.jsx';
 import SignUpComponent from './components/SignUpComponent.jsx';

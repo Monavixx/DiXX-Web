@@ -2,8 +2,7 @@ import { useRef, useState } from "react";
 import './css/SignUp.css';
 import { post_request } from "../functions/send_request";
 import { useNavigate } from "react-router-dom";
-import { useEffectOnLoadUserData } from "../functions/useEffectOnLoadUserData";
-import { useSelector } from "react-redux";
+import { useGoToProfileIfAuthenticated } from "../functions/redirections";
 
 export default function SignUpComponent() {
     let usernameInput = useRef(null);
@@ -15,14 +14,7 @@ export default function SignUpComponent() {
 
     const [message, setMessage] = useState('');
 
-    const is_authenticated = useSelector(state=>state.user.is_authenticated);
-
-    useEffectOnLoadUserData(()=>{
-        if(is_authenticated) {
-            navigate('/profile');
-            return;
-        }
-    });
+    useGoToProfileIfAuthenticated();
 
     function signUp() {
         if(passwordInput.current.value !== passwordAgainInput.current.value) {

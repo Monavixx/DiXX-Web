@@ -1,28 +1,23 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { get_request } from "../functions/send_request";
-import { Link, useNavigate, createSearchParams, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import './css/YourSets.css';
-import {useSelector} from 'react-redux';
 import { useEffectOnLoadUserData } from '../functions/useEffectOnLoadUserData';
+import { useIsAuthenticated } from "../functions/auth";
+import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
 
 export default function YourSetsComponent() {
     const [sets, setSets] = useState([]);
-    const is_authenticated = useSelector(state=>state.user.is_authenticated);
-    const navigate = useNavigate();
-    const location = useLocation();
+    const is_authenticated = useIsAuthenticated();
 
+    useGoToLoginIfNotAuthenticated();
 
     useEffectOnLoadUserData(()=>{
-        if(!is_authenticated) {
-            navigate({pathname: '/login', search: createSearchParams({'after_login':location.pathname}).toString()});
-            return;
-        }
         async function inner() {
             const _data = await (await get_request('cards/sets/my/')).json();
             setSets(_data);
-            console.log(sets);
         };
-        inner();
+        if(is_authenticated) inner();
     },[]);
 
     return (

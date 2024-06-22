@@ -4,10 +4,11 @@ import {Link, useLocation} from 'react-router-dom';
 import React, {useRef, useEffect} from 'react';
 import {rootdom} from '../index.jsx';
 import { API_URL } from '../settings.js';
+import { useIsAuthenticated } from '../functions/auth.js';
 
 export default function Header() {
     const username = useSelector(state=>state.user.name);
-    const is_authenticated = useSelector(state=>state.user.is_authenticated);
+    const is_authenticated = useIsAuthenticated();
     const isUserDataPending = useSelector(state=>state.user.is_pending);
     const menu = useRef(null);
     const menuButton = useRef(null);
@@ -50,6 +51,8 @@ export default function Header() {
             menuButton2.current.classList.add('header-menu-button-toggle-off');
             menuButton2.current.classList.remove('header-menu-button-toggle-on');
             menu.current.classList.add('menu-toggle-off');
+
+            //Here the ms timeout must be the same as in css
             timeoutId.current = setTimeout(()=>{menu.current.style.display = 'none'},300);
         }
     }

@@ -1,26 +1,17 @@
 import { useDispatch, useSelector } from "react-redux"
 import { logoutRequest } from "../functions/auth";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { logoutAction, pending } from "../slices/userReducer";
 
 import "./css/Profile.css";
-import { useEffectOnLoadUserData } from "../functions/useEffectOnLoadUserData";
+import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
 
 
 export default function Profile() {
     const username = useSelector(state=>state.user.name);
     const email = useSelector(state=>state.user.email);
-    const is_authenticated = useSelector(state=>state.user.is_authenticated);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
-    useEffectOnLoadUserData(()=>{
-        if(!is_authenticated) {
-            navigate('/login');
-            return;
-        }
-    },[]);
+    useGoToLoginIfNotAuthenticated();
 
     function logout() {
         async function inner() {

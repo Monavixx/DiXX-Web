@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams, createSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { get_request } from "../functions/send_request";
-import { useSelector } from "react-redux";
 import './css/Set.css';
 import { useEffectOnLoadUserData } from "../functions/useEffectOnLoadUserData";
+import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
+import { useIsAuthenticated } from "../functions/auth";
 
 export default function SetComponent() {
     const {id} = useParams();
@@ -12,22 +13,19 @@ export default function SetComponent() {
     const [isLearning, setIsLearning] = useState(false);
     const [card, setCard] = useState(null);
     const [isShowSecond, setIsShowSecond] = useState(false);
-    const is_authenticated = useSelector(state=>state.user.is_authenticated);
-    const navigate = useNavigate();
-    const location = useLocation();
+    const is_authenticated = useIsAuthenticated();
+    
+
+    useGoToLoginIfNotAuthenticated();
     
     useEffectOnLoadUserData(()=>{
-        if(!is_authenticated) {
-            navigate({pathname: '/login', search: createSearchParams({'after_login':location.pathname}).toString()});
-            return;
-        }
         async function inner() {
             setIsLoading(true);
             const _data = await (await get_request(`cards/sets/${id}/`)).json();
             setSet(_data);
             setIsLoading(false);
         }
-        inner();
+        if(is_authenticated) inner();
     }, []);
 
     function learn() {

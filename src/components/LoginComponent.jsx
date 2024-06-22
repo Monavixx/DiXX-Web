@@ -1,11 +1,11 @@
 import {useState, useEffect, useRef} from 'react';
-import {post_request, get_request} from '../functions/send_request';
-import {useDispatch, useSelector} from 'react-redux';
-import { loginAction, logoutAction } from '../slices/userReducer';
+import {post_request} from '../functions/send_request';
+import {useDispatch} from 'react-redux';
+import { loginAction } from '../slices/userReducer';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './css/Login.css';
-import { useEffectOnLoadUserData } from '../functions/useEffectOnLoadUserData';
+import { useGoToProfileIfAuthenticated } from '../functions/redirections';
 
 function LoginComponent() {
     const dispatch = useDispatch();
@@ -17,14 +17,7 @@ function LoginComponent() {
     let [isLoading, setIsLoading] = useState(false);
     const [searchParams] = useSearchParams();
 
-    const is_authenticated = useSelector(state=>state.user.is_authenticated);
-
-    useEffectOnLoadUserData(()=>{
-        if(is_authenticated) {
-            navigate('/profile');
-            return;
-        }
-    },[]);
+    useGoToProfileIfAuthenticated();
 
     useEffect(()=>{
         if(!isLoading)
@@ -34,6 +27,9 @@ function LoginComponent() {
     function login() {
         async function inner() {
             setIsLoading(true);
+            /*dispatch(pending(false)) is not necessary here
+             'cause after login it redirects to profile and in App.jsx it's called
+            */
             let _data = await (await post_request('login/',
                 {username: usernameInput.current.value,
                  password: passwordInput.current.value})).json();
