@@ -5,14 +5,14 @@ import './css/Set.css';
 import { useEffectOnLoadUserData, useLayoutEffectOnLoadUserData } from "../functions/useEffectOnLoadUserData";
 import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
 import { useIsAuthenticated } from "../functions/auth";
+import LearnComponent from "./LearnComponent";
 
 export default function SetComponent() {
     const {id} = useParams();
     const [set, setSet] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isLearning, setIsLearning] = useState(false);
-    const [card, setCard] = useState(null);
-    const [isShowSecond, setIsShowSecond] = useState(false);
+    
     const is_authenticated = useIsAuthenticated();
     
 
@@ -30,21 +30,8 @@ export default function SetComponent() {
 
     function learn() {
         setIsLearning(true);
-        nextCard();
     }
-
-    function nextCard() {
-        
-        async function inner() {
-            setIsShowSecond(false);
-            const [_data] = await get_request_json(`cards/sets/${set.id}/random-learn/`);
-            setCard(_data);
-        }
-        inner();
-    }
-    function showSecond() {
-        setIsShowSecond(true);
-    }
+    
     function datetimeFormat() {
         let res = set.create_datetime.split('.')[0];
         res = res.split('T').join(' ');
@@ -56,18 +43,7 @@ export default function SetComponent() {
     if(!set.success) return set.message;
 
     if(isLearning) {
-        return (
-            <div className="card-learn">
-                <div className="card-learn-text">
-                    <div className="card-learn-first">{card?.first}</div>
-                    <div className="card-learn-second">{ isShowSecond ? card?.second : '***'}</div>
-                </div>
-                <div className="card-learn-buttons">
-                    <button className="card-learn-button-show" onClick={showSecond}>Show</button>
-                    <button className="card-learn-button-next" onClick={nextCard}>Next</button>
-                </div>
-            </div>
-        );
+        return <LearnComponent setId={set.id}/>
     }
 
     return (
