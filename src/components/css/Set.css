@@ -1,10 +1,105 @@
 .set-info-container {
-
+    width: 400px;
+    background-color: rgb(29, 29, 31);
+    height: max-content;
+    padding: 15px;
+    border-radius: 10px;
+}
+.set-info-container h1 {
+    text-align: center;
 }
 .set-info-label-description {
     font-size: 1.4rem;
+    margin-left: 30px;
+    color: rgb(207, 207, 207);
 }
 .set-info-description {
     overflow-wrap: break-word;
-    margin-left: 30px;
+    font-size: 0.9em;
+}
+.set-info-number-of-cards {
+    font-size: 0.8em;
+    color: rgb(190, 188, 188);
+    width:max-content;
+}
+
+.set-info-author-and-datetime {
+    margin-top: 15px;
+    width:max-content;
+    text-align: right;
+}
+.set-info-at {
+    font-size: 0.9rem;
+    color: rgb(201, 201, 201);
+}
+
+.set-buttons-container {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+.set-buttons-container button {
+    padding: 7px 15px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 10px;
+    box-shadow: -1px 2px 2px black;
+    color: inherit;
+    margin-bottom: 2px;
+}
+.set-buttons-container button:hover {
+    box-shadow: -2px 3px 3px black;
+    padding: 8px 16px;
+    margin-bottom: 0;
+}
+.set-buttons-container button:active {
+    box-shadow: 0px 1px 3px black;
+    padding: 7px 15px;
+    margin-bottom: 2;
+}
+
+.set-info-author span{
+    text-decoration: underline dashed rgb(198, 212, 214);
+}
+.set-button-delete {
+    background-color: rgb(73, 35, 35);
+}
+.set-button-edit {
+    background-color: rgb(40, 57, 71);
+}
+.set-button-learn {
+    background-color: rgb(46, 78, 45);
+}
+.set-button-delete:hover {
+    background-color: rgb(104, 51, 51);
+}
+.set-button-edit:hover {
+    background-color: rgb(61, 86, 107);
+}
+.set-button-learn:hover {
+    background-color: rgb(65, 110, 63);
+}
+
+.set-info-words-and-author {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* card */
+.card-learn {
+    background-color: rgb(29, 29, 31);
+    width:50%;
+    padding: 20px;
+    border-radius: 15px;
+    height: 100%;
+}
+.card-learn-text {
+    height: 40vh;
+}
+.card-learn-first {
+    text-align: center;
+    font-size:2rem;
+
 }

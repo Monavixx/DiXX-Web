@@ -48,6 +48,7 @@
     border: none;
     color: inherit;
     padding: 5px 0;
+    box-shadow: -1px 2px 3px black;
 }
 .your-sets-set-link button:hover {
     background-color: rgb(70, 75, 80);

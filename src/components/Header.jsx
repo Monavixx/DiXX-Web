@@ -67,8 +67,8 @@ export default function Header() {
             </div>
             <div className="header-dixx"><Link to='/'>DiXX</Link></div>
             <div className="header-user-right">
-                <div className='header-user-image'><Link to='/login'><img src='/anonymous-user-icon.png' alt="anonymous" /></Link></div>
-                <div className="header-username"><Link to='/login'>{!isUserDataPending && username}</Link></div>
+                <div className='header-user-image'><Link to='/profile'><img src='/anonymous-user-icon.png' alt="anonymous" /></Link></div>
+                <div className="header-username"><Link to='/profile'>{!isUserDataPending && username}</Link></div>
             </div>
         </div>
         <div className="menu menu-toggle-off" ref={menu}>

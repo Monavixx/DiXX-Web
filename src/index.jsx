@@ -6,10 +6,13 @@ import {BrowserRouter} from 'react-router-dom';
 import {configureStore} from '@reduxjs/toolkit';
 import userReducer from './slices/userReducer';
 import {Provider} from 'react-redux';
+import ReloadProvider, { GlobalFunctionComponent } from './components/ReloadContext';
+import locationReducer from './slices/locationReduces';
 
-let store = configureStore({
+export const store = configureStore({
   reducer: {
-    user: userReducer
+    user: userReducer,
+    location: locationReducer
   }
 });
 
@@ -18,9 +21,16 @@ export let rootdom = document.getElementById('root');
 const root = ReactDOM.createRoot(rootdom);
 
 root.render(
-    <BrowserRouter>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </BrowserRouter>
+    <ReloadProvider>
+      { (key)=> 
+      <>
+        <BrowserRouter>
+          <Provider store={store}>
+            <App key={key}/>
+          </Provider>
+        </BrowserRouter>
+        <GlobalFunctionComponent/>
+      </>
+      }
+    </ReloadProvider>
 );

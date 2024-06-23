@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { get_request } from "../functions/send_request";
+import { get_request_json } from "../functions/send_request";
 import { Link } from "react-router-dom";
 import './css/YourSets.css';
-import { useEffectOnLoadUserData } from '../functions/useEffectOnLoadUserData';
+import { useEffectOnLoadUserData, useLayoutEffectOnLoadUserData } from '../functions/useEffectOnLoadUserData';
 import { useIsAuthenticated } from "../functions/auth";
 import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
 
@@ -12,22 +12,30 @@ export default function YourSetsComponent() {
 
     useGoToLoginIfNotAuthenticated();
 
-    useEffectOnLoadUserData(()=>{
+    useLayoutEffectOnLoadUserData(()=>{
         async function inner() {
-            const _data = await (await get_request('cards/sets/my/')).json();
-            setSets(_data);
+            const [_data, http_status_code] = await get_request_json('cards/sets/my/');
+            if(http_status_code === 200)
+                setSets(_data);
         };
         if(is_authenticated) inner();
-    },[]);
+    },[is_authenticated]);
+    
+
+    function formatDescription(d) {
+        const MAX_LENGTH = 60;
+        if(d.length <= MAX_LENGTH) return d;
+        return d.slice(0, MAX_LENGTH).trim() + '...';
+    }
 
     return (
         <div className="your-sets">
             <h1>Your sets</h1>
             <div className="your-sets-container">
-                {sets.map((e, i) => { return (
+                { sets.map((e, i) => { return (
                     <div className="your-sets-set" key={i}>
                         <h2><Link to={`/sets/${e.id}`}>{e.name}</Link></h2>
-                        <p className="your-sets-set-description">{e.description.slice(0, 200)}</p>
+                        <p className="your-sets-set-description">{formatDescription(e.description + 'ffd r grfe fr trr rgre rerer3r gr greg r')}</p>
                         <div className="your-sets-button-and-created-by">
                             <div className="your-sets-set-div-link"><Link className="your-sets-set-link" to={`/sets/${e.id}`}><button>Open</button></Link></div>
                             <div className="your-sets-set-created-by-and-number-of-cards">

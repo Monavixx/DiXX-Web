@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import './css/SignUp.css';
-import { post_request } from "../functions/send_request";
+import { post_request_json } from "../functions/send_request";
 import { useNavigate } from "react-router-dom";
 import { useGoToProfileIfAuthenticated } from "../functions/redirections";
 
@@ -22,12 +22,11 @@ export default function SignUpComponent() {
             return;
         }
         async function inner() {
-            let _data = await post_request('signup/', {
+            let [_data] = await post_request_json('signup/', {
                 username: usernameInput.current.value,
                 email: emailInput.current.value,
                 password: passwordInput.current.value
             });
-            _data = await _data.json();
             if(_data.success) {
                 navigate('/login');
                 return;

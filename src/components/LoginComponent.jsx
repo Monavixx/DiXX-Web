@@ -1,5 +1,5 @@
 import {useState, useEffect, useRef} from 'react';
-import {post_request} from '../functions/send_request';
+import { post_request_json} from '../functions/send_request';
 import {useDispatch} from 'react-redux';
 import { loginAction } from '../slices/userReducer';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -30,9 +30,9 @@ function LoginComponent() {
             /*dispatch(pending(false)) is not necessary here
              'cause after login it redirects to profile and in App.jsx it's called
             */
-            let _data = await (await post_request('login/',
+            let [_data] = await post_request_json('login/',
                 {username: usernameInput.current.value,
-                 password: passwordInput.current.value})).json();
+                 password: passwordInput.current.value});
 
             
             if(_data.is_authenticated) {
