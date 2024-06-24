@@ -1,23 +1,21 @@
 import {useState, useEffect, useRef} from 'react';
-import { post_request_json} from '../functions/send_request';
-import {useDispatch} from 'react-redux';
-import { loginAction } from '../slices/userReducer';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import {  useNavigate, useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './css/Login.css';
 import { useGoToProfileIfAuthenticated } from '../functions/redirections';
+import { API } from '../API';
 
 function LoginComponent() {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     let usernameInput = useRef(null);
     let passwordInput = useRef(null);
 
     let [isLoading, setIsLoading] = useState(false);
+    
     const [searchParams] = useSearchParams();
 
-    useGoToProfileIfAuthenticated();
+    useGoToProfileIfAuthenticated(!isLoading);
 
     useEffect(()=>{
         if(!isLoading)
@@ -25,30 +23,23 @@ function LoginComponent() {
     },[isLoading]);
 
     function login() {
-        async function inner() {
-            setIsLoading(true);
-            /*dispatch(pending(false)) is not necessary here
-             'cause after login it redirects to profile and in App.jsx it's called
-            */
-            let [_data] = await post_request_json('login/',
-                {username: usernameInput.current.value,
-                 password: passwordInput.current.value});
+        const after_login = searchParams.get('after_login');
+        setIsLoading(true);
 
-            
-            if(_data.is_authenticated) {
-                dispatch(loginAction({name:_data.username,
-                                email:_data.email
-                }));
-                if(searchParams.get('after_login') !== null) {
-                    navigate(searchParams.get('after_login'));
-                    return;
-                }
-                navigate('/profile');
+        API.login(usernameInput.current.value, passwordInput.current.value)
+        .then(_data => {
+            console.log('then');
+            if(after_login !== null && after_login !== '/profile') {
+                navigate(after_login);
+                console.log('go after login')
                 return;
             }
+            navigate('/profile');
+        })
+        .catch(_data=>{})
+        .finally(()=>{
             setIsLoading(false);
-        }
-        inner();
+        });
     }
     
     return (

@@ -7,7 +7,6 @@ export function useGoToLoginIfNotAuthenticated() {
     const is_authenticated = useIsAuthenticated();
     const navigate = useNavigate();
     const location = useLocation();
-    console.log('usegoto called');
     useLayoutEffectOnLoadUserData(()=>{
         if(!is_authenticated) {
             navigate({pathname: '/login', search: createSearchParams({'after_login':location.pathname}).toString()});
@@ -15,12 +14,12 @@ export function useGoToLoginIfNotAuthenticated() {
     }, [is_authenticated]);
 }
 
-export function useGoToProfileIfAuthenticated() {
+export function useGoToProfileIfAuthenticated(allow) {
     const is_authenticated = useIsAuthenticated();
     const navigate = useNavigate();
     useLayoutEffectOnLoadUserData(()=>{
-        if(is_authenticated) {
+        if(is_authenticated && allow) {
             navigate('/profile');
         }
-    },[]);
+    },[is_authenticated, allow]);
 }

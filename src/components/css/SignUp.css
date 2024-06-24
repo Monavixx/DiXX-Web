@@ -6,6 +6,7 @@
 }
 .message-signup {
     color: red;
+    word-wrap: break-word;
 }
 .signup {
     background-color: rgb(26, 26, 27);

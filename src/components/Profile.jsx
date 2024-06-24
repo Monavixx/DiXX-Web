@@ -1,8 +1,6 @@
-import { useDispatch, useSelector } from "react-redux"
-import { logoutAction, pending } from "../slices/userReducer";
+import { useSelector } from "react-redux"
 import "./css/Profile.css";
 import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
-import { get_request } from "../functions/send_request";
 import { API } from "../API";
 import { useEffect } from "react";
 
@@ -10,9 +8,9 @@ import { useEffect } from "react";
 export default function Profile() {
     const username = useSelector(state=>state.user.name);
     const email = useSelector(state=>state.user.email);
-    const dispatch = useDispatch();
 
     const wasLocationUpdated = useSelector(state=>state.location.wasUpdated);
+    
 
     useGoToLoginIfNotAuthenticated();
 
@@ -20,16 +18,15 @@ export default function Profile() {
         // It checks if location has been ever changed. If it hasn't,
         // then checkForLogin has already called in AutoLoginComponent,
         // and it's not necessary to call it twice.
-        if(wasLocationUpdated) {
+        if(wasLocationUpdated ) {
+            console.log('check');
             API.checkForLogin();
         }
     },[wasLocationUpdated]);
 
     function logout() {
         async function inner() {
-            dispatch(pending(true));
-            await get_request('logout/');
-            dispatch(logoutAction());
+            await API.logout();
         }
         inner();
     }

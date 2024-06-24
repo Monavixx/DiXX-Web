@@ -34,10 +34,10 @@ export default function YourSetsComponent() {
             <div className="your-sets-container">
                 { sets.map((e, i) => { return (
                     <div className="your-sets-set" key={i}>
-                        <h2><Link to={`/sets/${e.id}`}>{e.name}</Link></h2>
+                        <h2><Link to={`/set/${e.id}`}>{e.name}</Link></h2>
                         <p className="your-sets-set-description">{formatDescription(e.description)}</p>
                         <div className="your-sets-button-and-created-by">
-                            <div className="your-sets-set-div-link"><Link className="your-sets-set-link" to={`/sets/${e.id}`}><button>Open</button></Link></div>
+                            <div className="your-sets-set-div-link"><Link className="your-sets-set-link" to={`/set/${e.id}`}><button>Open</button></Link></div>
                             <div className="your-sets-set-created-by-and-number-of-cards">
                                 <div>{e.numberOfCards} words</div>
                                 <div>*Created by <span className="your-sets-set-author">{e.author}</span></div>

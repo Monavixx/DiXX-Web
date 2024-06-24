@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import './css/SignUp.css';
-import { post_request_json } from "../functions/send_request";
 import { useNavigate } from "react-router-dom";
 import { useGoToProfileIfAuthenticated } from "../functions/redirections";
+import { API } from "../API";
 
 export default function SignUpComponent() {
     let usernameInput = useRef(null);
@@ -21,19 +21,21 @@ export default function SignUpComponent() {
             setMessage('Passwords aren\'t the same');
             return;
         }
-        async function inner() {
-            let [_data] = await post_request_json('signup/', {
-                username: usernameInput.current.value,
-                email: emailInput.current.value,
-                password: passwordInput.current.value
-            });
-            if(_data.success) {
+        async function inner() {            
+            try {
+                await API.signUp(
+                    usernameInput.current.value,
+                    emailInput.current.value,
+                    passwordInput.current.value);
                 navigate('/login');
                 return;
             }
-            setMessage(_data.message);
+            catch([data]) {
+                setMessage(data.message);
+            }
         }
         inner();
+        
     }
 
     return (

@@ -8,7 +8,7 @@ export function useReload() {
 
 export default function ReloadProvider({children}) {
     const [key, setKey] = useState(false);
-    const reloadPage = () => {setKey(v=>!v);console.log('reload')}
+    const reloadPage = () => {setKey(v=>!v)}
     return (
         <ReloadContext.Provider value={reloadPage}>
             {children(key)}

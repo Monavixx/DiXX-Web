@@ -72,4 +72,5 @@
 }
 .your-sets-set-description {
     overflow-wrap: break-word;
+    white-space: pre-wrap;
 }

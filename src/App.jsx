@@ -1,10 +1,10 @@
 
 import './App.css';
 import LoginComponent from './components/LoginComponent.jsx';
-import {Routes, Route, useLocation} from 'react-router-dom';
+import {Routes, Route, useLocation, useNavigate} from 'react-router-dom';
 import Header from './components/Header.jsx';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Profile from './components/Profile.jsx';
 import SignUpComponent from './components/SignUpComponent.jsx';
 import YourSetsComponent from './components/YourSetsComponent.jsx';
@@ -12,14 +12,23 @@ import SetComponent from './components/SetComponent.jsx';
 import { API } from './API.js';
 import { updateLocation } from './slices/locationReduces.js';
 import {useDidUpdateEffect} from './functions/useDidUpdateEffects.js';
+import { get_request_json } from './functions/send_request.js';
+import CreateNewSetComponent from './components/CreateNewSetComponent.jsx';
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
+  const locationState = useSelector(state=> state.location.navigatePathname);
+  const navigate = useNavigate();
   
   useDidUpdateEffect(()=>{
-    dispatch(updateLocation());
+    dispatch(updateLocation(location.pathname));
+    console.log(location.pathname);
   },[location, dispatch]);
+
+  useDidUpdateEffect(()=> {
+    navigate(locationState);
+  }, [locationState]);
 
   return (
     <>
@@ -32,7 +41,9 @@ function App() {
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/signup' element={<SignUpComponent/>}/>
           <Route path='/sets/your' element={<YourSetsComponent/>}/>
-          <Route path='/sets/:id' element={<SetComponent/>}/>
+          <Route path='/set/:id' element={<SetComponent/>}/>
+          <Route path='/create-new-set' element={<CreateNewSetComponent/>} />
+          <Route path='/404' element={'404'}/>
         </Routes>
       </div>
       

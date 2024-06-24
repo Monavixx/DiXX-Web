@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { get_request_json } from "../functions/send_request";
+import { API } from "../API";
 
 
 
@@ -13,7 +13,7 @@ export default function LearnComponent({setId}) {
     const nextCard = useCallback(() => {
         async function inner() {
             setIsShowSecond(false);
-            const [_data] = await get_request_json(`cards/sets/${setId}/random-learn/`);
+            const [_data] = await API.learn(setId);
             setCard(_data);
         }
         inner();

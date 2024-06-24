@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { get_request_json } from "../functions/send_request";
 import './css/Set.css';
-import { useEffectOnLoadUserData, useLayoutEffectOnLoadUserData } from "../functions/useEffectOnLoadUserData";
+import { useEffectOnLoadUserData } from "../functions/useEffectOnLoadUserData";
 import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
 import { useIsAuthenticated } from "../functions/auth";
 import LearnComponent from "./LearnComponent";
+import { API } from "../API";
 
 export default function SetComponent() {
     const {id} = useParams();
@@ -18,10 +18,10 @@ export default function SetComponent() {
 
     useGoToLoginIfNotAuthenticated();
     
-    useLayoutEffectOnLoadUserData(()=>{
+    useEffectOnLoadUserData(()=>{
         async function inner() {
             setIsLoading(true);
-            const [_data] = await get_request_json(`cards/sets/${id}/`);
+            const [_data] = await API.getSet(id);
             setSet(_data);
             setIsLoading(false);
         }
@@ -40,7 +40,6 @@ export default function SetComponent() {
 
 
     if(isLoading) return "Loading...";
-    if(!set.success) return set.message;
 
     if(isLearning) {
         return <LearnComponent setId={set.id}/>
