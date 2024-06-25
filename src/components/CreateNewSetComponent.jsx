@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { API } from "../API";
+import { useNavigate } from "react-router-dom";
 
 
 export default function CreateNewSetComponent() {
@@ -7,19 +8,20 @@ export default function CreateNewSetComponent() {
     const descriptionInput = useRef(null);
     const isPrivateInput = useRef(null);
     const [message, setMessage] = useState('');
+    const navigate = useNavigate();
     
     function createNewSet() {
-        async function inner() {
-            const [, status] = await API.createNewSet({
-                name: nameInput.current.value,
-                description: descriptionInput.current.value,
-                is_private: isPrivateInput.current.checked
-            });
-            if(status === 200) {
-                setMessage('Success!');
-            }
-        }
-        inner();
+        API.createNewSet({
+            name: nameInput.current.value,
+            description: descriptionInput.current.value,
+            is_private: isPrivateInput.current.checked
+        }).then(data => {
+            navigate(`/set/${data.id}`);
+        }).catch(data => {
+            setMessage(Object.entries(data.errors).map(([k, v])=>{
+                return k + ': ' + v + '; ';
+            }));
+        });
     }
 
     return (

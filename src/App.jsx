@@ -12,8 +12,9 @@ import SetComponent from './components/SetComponent.jsx';
 import { API } from './API.js';
 import { updateLocation } from './slices/locationReduces.js';
 import {useDidUpdateEffect} from './functions/useDidUpdateEffects.js';
-import { get_request_json } from './functions/send_request.js';
 import CreateNewSetComponent from './components/CreateNewSetComponent.jsx';
+import EditSetComponent from './components/EditSetComponent.jsx';
+import AddCardComponent from './components/AddCardComponent.jsx';
 
 function App() {
   const dispatch = useDispatch();
@@ -23,7 +24,6 @@ function App() {
   
   useDidUpdateEffect(()=>{
     dispatch(updateLocation(location.pathname));
-    console.log(location.pathname);
   },[location, dispatch]);
 
   useDidUpdateEffect(()=> {
@@ -42,6 +42,8 @@ function App() {
           <Route path='/signup' element={<SignUpComponent/>}/>
           <Route path='/sets/your' element={<YourSetsComponent/>}/>
           <Route path='/set/:id' element={<SetComponent/>}/>
+          <Route path='/set/:id/edit' element={<EditSetComponent/>}/>
+          <Route path='/set/:id/add-card' element={<AddCardComponent/>}/>
           <Route path='/create-new-set' element={<CreateNewSetComponent/>} />
           <Route path='/404' element={'404'}/>
         </Routes>

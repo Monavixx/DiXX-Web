@@ -28,10 +28,8 @@ function LoginComponent() {
 
         API.login(usernameInput.current.value, passwordInput.current.value)
         .then(_data => {
-            console.log('then');
             if(after_login !== null && after_login !== '/profile') {
                 navigate(after_login);
-                console.log('go after login')
                 return;
             }
             navigate('/profile');
