@@ -25,10 +25,7 @@ export default function Profile() {
     },[wasLocationUpdated]);
 
     function logout() {
-        async function inner() {
-            await API.logout();
-        }
-        inner();
+        API.logout();
     }
     return (
         <>

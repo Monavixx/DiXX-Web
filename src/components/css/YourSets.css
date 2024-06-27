@@ -18,13 +18,18 @@
 }
 .your-sets-set h2 {
     text-align: center;
+    max-width: 400px;
 }
 .your-sets-set h2 a {
     text-decoration: none;
     color: inherit;
+    word-wrap: break-word;
 }
 .your-sets-set h2 a:hover{
     text-shadow: 0 5px 6px black;
+}
+.your-sets-set-created-by {
+    text-align: right;
 }
 .your-sets-set-author {
     text-decoration-line: underline;

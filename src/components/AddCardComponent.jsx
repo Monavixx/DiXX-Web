@@ -3,21 +3,25 @@ import { useNavigate, useParams } from "react-router-dom";
 import { API } from "../API";
 
 
-export default function AddCardComponent() {
+export default function AddCardComponent({setCards}) {
     const {id:idSet} = useParams();
-    const word = useRef(null);
-    const meaning = useRef(null);
+    const firstInput = useRef(null);
+    const secondInput = useRef(null);
     const [errors, setErrors] = useState(null);
     const navigate = useNavigate();
 
     function addCard() {
-        API.addCard(idSet, word.current.value, meaning.current.value)
-        .then(() => {
+        const first = firstInput.current.value;
+        const second = secondInput.current.value;
+
+        API.addCard(idSet, first, second)
+        .then(([data, status]) => {
+            setCards(prev=>[...prev, {first: data.data.first, second: data.data.second, id:data.data.id}])
             //clear all inputs and states
-            word.current.value='';
-            meaning.current.value='';
+            firstInput.current.value='';
+            secondInput.current.value='';
             setErrors([]);
-        }).catch(([,status,data])=> {
+        }).catch(([data,status])=> {
             if(status === 403) {
                 navigate(`/set/${idSet}/`);
             }
@@ -35,8 +39,8 @@ export default function AddCardComponent() {
     return (
         <>
             <div>
-                <input ref={word} type="text" placeholder="word" onKeyDown={keyDown}/>
-                <input ref={meaning} type="text" placeholder="meaning" onKeyDown={keyDown}/>
+                <input ref={firstInput} type="text" placeholder="word" onKeyDown={keyDown}/>
+                <input ref={secondInput} type="text" placeholder="meaning" onKeyDown={keyDown}/>
                 <button onClick={addCard}>Add</button>
                 <div>{errors !== null && Object.entries(errors).map((k,v)=>{return k + ': ' + v + '; ';})}</div>
             </div>

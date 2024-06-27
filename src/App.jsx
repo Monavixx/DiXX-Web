@@ -57,10 +57,7 @@ function App() {
 function AutoLoginComponent() {
 
   useEffect(()=>{
-    async function inner(){
-        await API.checkForLogin();
-    };
-    inner();
+    API.checkForLogin();
   }, []);
   return null;
 }

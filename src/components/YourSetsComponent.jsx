@@ -2,9 +2,10 @@ import { useState } from "react";
 import { get_request_json } from "../functions/send_request";
 import { Link } from "react-router-dom";
 import './css/YourSets.css';
-import { useEffectOnLoadUserData, useLayoutEffectOnLoadUserData } from '../functions/useEffectOnLoadUserData';
+import { useLayoutEffectOnLoadUserData } from '../functions/useEffectOnLoadUserData';
 import { useIsAuthenticated } from "../functions/auth";
 import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
+import { API } from "../API";
 
 export default function YourSetsComponent() {
     const [sets, setSets] = useState([]);
@@ -13,12 +14,12 @@ export default function YourSetsComponent() {
     useGoToLoginIfNotAuthenticated();
 
     useLayoutEffectOnLoadUserData(()=>{
-        async function inner() {
-            const [_data, http_status_code] = await get_request_json('cards/sets/my/');
-            if(http_status_code === 200)
-                setSets(_data);
-        };
-        if(is_authenticated) inner();
+
+        if(is_authenticated) {
+            API.getYourSets().then(([data]) => {
+                setSets(data.data);
+            });
+        }
     },[is_authenticated]);
     
 
@@ -40,7 +41,7 @@ export default function YourSetsComponent() {
                             <div className="your-sets-set-div-link"><Link className="your-sets-set-link" to={`/set/${e.id}`}><button>Open</button></Link></div>
                             <div className="your-sets-set-created-by-and-number-of-cards">
                                 <div>{e.numberOfCards} words</div>
-                                <div>*Created by <span className="your-sets-set-author">{e.author}</span></div>
+                                <div className="your-sets-set-created-by">*Created by <span className="your-sets-set-author">{e.author}</span></div>
                                 
                             </div>
                         </div>

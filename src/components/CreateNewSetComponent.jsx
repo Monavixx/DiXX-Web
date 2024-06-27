@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { API } from "../API";
 import { useNavigate } from "react-router-dom";
+import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
 
 
 export default function CreateNewSetComponent() {
@@ -9,15 +10,17 @@ export default function CreateNewSetComponent() {
     const isPrivateInput = useRef(null);
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+
+    useGoToLoginIfNotAuthenticated();
     
     function createNewSet() {
         API.createNewSet({
             name: nameInput.current.value,
             description: descriptionInput.current.value,
             is_private: isPrivateInput.current.checked
-        }).then(data => {
-            navigate(`/set/${data.id}`);
-        }).catch(data => {
+        }).then(([data]) => {
+            navigate(`/set/${data.data.id}`);
+        }).catch(([data]) => {
             setMessage(Object.entries(data.errors).map(([k, v])=>{
                 return k + ': ' + v + '; ';
             }));

@@ -5,11 +5,11 @@ import { loginAction, logoutAction, pending } from "./slices/userReducer.js";
 export const API = {
     checkForLogin: async ()=> {
         store.dispatch(pending(true));
-        const [_data, status] = await get_request_json('login/');
+        const [data, status] = await get_request_json('login/');
         if(status === 200) {
             store.dispatch(loginAction({
-              name:_data.username,
-              email:_data.email
+              name:data.data.username,
+              email:data.data.email
             }));
         }
         else {
@@ -24,16 +24,15 @@ export const API = {
       })
       .then(([data, status]) => {
         return new Promise((resolve, reject)=>{
-          console.log(data);
           if(status === 201) {
-            resolve(data);
+            resolve([data, status]);
           }
           else {
-            reject(data);
+            reject([data, status]);
           }
         });
       },
-      ([data])=>{});
+      ()=>{});
     },
 
     learn: async(setId)=>{
@@ -43,30 +42,43 @@ export const API = {
     login: async(username, password)=> {
 
       store.dispatch(pending(true));
-      const [_data, status] = await post_request_json('login/',{username:username, password:password});
+      const [data, status] = await post_request_json('login/',{username:username, password:password});
       
       return new Promise((resolve, reject) => {
         if(status === 200) {
-          store.dispatch(loginAction({name:_data.username,
-            email:_data.email
+          store.dispatch(loginAction({name:data.data.username,
+            email:data.data.email
           }));
-          resolve(_data);
+          resolve([data, status]);
         }
         else {
           store.dispatch(pending(false));
-          reject(_data);
+          reject([data, status]);
         }
       });
     },
 
     logout: async()=>{
       store.dispatch(pending(true));
-      await get_request_json('logout/');
+      const [,status] = await get_request_json('logout/');
+      if(status !== 200) {
+        console.log('LOGOUT ERROR');
+        return;
+      }
       store.dispatch(logoutAction());
     },
 
+    __getSet: async(id, fields = []) => {
+      return get_request_json(`cards/set/${id}/`, {fields: fields});
+    },
     getSet: async(id) => {
-      return get_request_json(`cards/set/${id}/`);
+      return API.__getSet(id);
+    },
+    getSetAndItsCards: async(id) => {
+      return API.__getSet(id, [
+        'id', 'name', 'description', 'card_set',
+        'create_datetime','author','is_private','numberOfCards'
+      ]);
     },
 
     signUp: async (username, email, password) => {
@@ -74,13 +86,13 @@ export const API = {
         username: username,
         email: email,
         password: password
-      }).then(([_data, status])=>{
+      }).then(([data, status])=>{
         return new Promise((resolve, reject)=>{
           if(status === 201) {
-            resolve(_data);
+            resolve([data, status]);
           }
           else {
-            reject(_data);
+            reject([data, status]);
           }
         });
       });
@@ -88,13 +100,13 @@ export const API = {
 
     removeSet: async(set_id) => {
       return post_request_json('cards/remove-set/', {set_id:set_id})
-      .then(([_data, status]) => {
+      .then(([data, status]) => {
         return new Promise((resolve, reject)=> {
           if(status === 200) {
-            resolve(_data);
+            resolve([data, status]);
           }
           else {
-            reject(_data);
+            reject([data, status]);
           }
         });
       });
@@ -105,30 +117,65 @@ export const API = {
         name: set_name,
         description: set_description,
         is_private: set_is_private
-      }).then((data) => {
+      }).then(([data, status]) => {
         return new Promise((resolve, reject) => {
-          if(data[1] === 200) {
-            resolve(data);
+          if(status === 200) {
+            resolve([data, status]);
           }
           else {
-            reject(data);
+            reject([data, status]);
           }
         });
       }, ()=>{});
     },
+
     addCard: async(set_id, first, second) => {
       return post_request_json(`cards/set/${set_id}/add-card/`, {
         first: first,
         second: second
-      }).then((data) => {
+      }).then(([data, status]) => {
         return new Promise((resolve, reject) => {
-          if(data[1] === 201) {
-            resolve(data);
+          if(status === 201) {
+            resolve([data, status]);
           }
           else {
-            reject(data);
+            reject([data, status]);
           }
         });
       }, ()=>{});
+    },
+
+    getYourSets: async() => {
+      const [data, status] = await get_request_json('cards/sets/my/');
+      return new Promise((resolve, reject) => {
+        if(status === 200)
+          resolve([data, status]);
+        else
+          reject([data, status]);
+      })
+    },
+
+    deleteCard: async(cardId) => {
+      const [data, status] = await post_request_json('cards/delete/', {id: cardId});
+      return new Promise((resolve, reject) => {
+        if (status === 200) {
+          resolve([data, status]);
+        }
+        else {
+          reject([data, status]);
+        }
+      });
+    },
+
+    addSet: async(setId) => {
+      const [data, status] = await post_request_json('cards/add-set/', {id:setId});
+      return new Promise((resolve, reject) => {
+        if (status === 200) {
+          resolve([data, status]);
+        }
+        else {
+          reject([data, status]);
+        }
+      });
     }
 }

@@ -13,8 +13,8 @@ export default function LearnComponent({setId}) {
     const nextCard = useCallback(() => {
         async function inner() {
             setIsShowSecond(false);
-            const [_data] = await API.learn(setId);
-            setCard(_data);
+            const [data] = await API.learn(setId);
+            setCard(data.data);
         }
         inner();
     }, [setId]);

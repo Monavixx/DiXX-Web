@@ -6,6 +6,7 @@ import { useGoToProfileIfAuthenticated } from '../functions/redirections';
 import { API } from '../API';
 
 function LoginComponent() {
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
 
     let usernameInput = useRef(null);
@@ -13,8 +14,6 @@ function LoginComponent() {
 
     let [isLoading, setIsLoading] = useState(false);
     
-    const [searchParams] = useSearchParams();
-
     useGoToProfileIfAuthenticated(!isLoading);
 
     useEffect(()=>{
@@ -27,14 +26,14 @@ function LoginComponent() {
         setIsLoading(true);
 
         API.login(usernameInput.current.value, passwordInput.current.value)
-        .then(_data => {
+        .then(() => {
             if(after_login !== null && after_login !== '/profile') {
                 navigate(after_login);
                 return;
             }
             navigate('/profile');
         })
-        .catch(_data=>{})
+        .catch(()=>{})
         .finally(()=>{
             setIsLoading(false);
         });

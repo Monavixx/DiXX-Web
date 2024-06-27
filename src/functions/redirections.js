@@ -14,7 +14,7 @@ export function useGoToLoginIfNotAuthenticated() {
     }, [is_authenticated]);
 }
 
-export function useGoToProfileIfAuthenticated(allow) {
+export function useGoToProfileIfAuthenticated(allow=true) {
     const is_authenticated = useIsAuthenticated();
     const navigate = useNavigate();
     useLayoutEffectOnLoadUserData(()=>{

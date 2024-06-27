@@ -22,8 +22,8 @@ export default function SetComponent() {
     useEffectOnLoadUserData(()=>{
         async function inner() {
             setIsLoading(true);
-            const [_data] = await API.getSet(id);
-            setSet(_data);
+            const [data] = await API.getSet(id);
+            setSet(data.data);
             setIsLoading(false);
         }
         if(is_authenticated) inner();
@@ -32,7 +32,7 @@ export default function SetComponent() {
     function learn() {
         setIsLearning(true);
     }
-    
+     
     function datetimeFormat() {
         let res = set.create_datetime.split('.')[0];
         res = res.split('T').join(' ');
@@ -41,12 +41,27 @@ export default function SetComponent() {
 
     function removeSet() {
         API.removeSet(set.id).then(()=>{
-            navigate('/sets/your');
-        })
-        .catch(()=>{});
+            //navigate('/sets/your');
+            setSet(prev => ({...prev, is_your_one:false}));
+        });
     }
     function editSet() {
         navigate('edit');
+    }
+    function addSet() {
+        API.addSet(set.id).then(()=>{
+            setSet(prev => ({...prev, is_your_one:true}));
+        });
+    }
+
+    function addRemoveSet(e) {
+        e.preventDefault();
+        if(e.target.checked) {
+            addSet();
+        }
+        else {
+            removeSet();
+        }
     }
 
 
@@ -55,6 +70,7 @@ export default function SetComponent() {
     if(isLearning) {
         return <LearnComponent setId={set.id}/>
     }
+
 
     return (
         <div className="set-info-container">
@@ -72,9 +88,13 @@ export default function SetComponent() {
                 </div>
             </div>
             <div className="set-buttons-container">
-                <button className="set-button-learn" onClick={learn}>Learn</button>
+                <button className="set-button-learn" onClick={learn} >Learn</button>
                 <button className="set-button-edit" onClick={editSet}>Edit</button>
-                <button className="set-button-remove" onClick={removeSet}>Remove</button>
+                {/*<button className="set-button-remove" onClick={removeSet}>Remove</button>*/}
+            </div>
+            <div>
+                <label htmlFor="isYourOne">add/remove</label>
+                <input type="checkbox" id='isYourOne' checked={set.is_your_one} onChange={addRemoveSet} />
             </div>
         </div>
     );

@@ -91,21 +91,22 @@ async function handleResponse(response, ignoreCodes=[]) {
             console.log(`Message from the server: ${v}`);
         });
     }
+    console.log(data);
     handleStatusCode(response.status, ignoreCodes);
-    return [data?.data, response.status, data];
+    return [data, response.status];
 }
 
 
 export async function get_request_json(url, json_obj=null, ignoreCodes=[], extra_headers={}) {
     const response = await get_request(url, json_obj, extra_headers);
-    return await handleResponse(response, ignoreCodes);
+    return handleResponse(response, ignoreCodes);
 }
 export async function post_request_json(url, json_obj=null, ignoreCodes=[], extra_headers={}) {
     const response = await post_request(url, json_obj, extra_headers);
-    return await handleResponse(response, ignoreCodes);
+    return handleResponse(response, ignoreCodes);
 }
 export async function put_request_json(url, json_obj=null, ignoreCodes=[], extra_headers={}) {
     const response = await put_request(url, json_obj, extra_headers);
-    return await handleResponse(response, ignoreCodes);
+    return handleResponse(response, ignoreCodes);
 }
 
