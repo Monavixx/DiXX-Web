@@ -37,9 +37,14 @@ export default function SignUpComponent() {
         inner();
         
     }
+    function handleEnter(e) {
+        if(e.key==='Enter')
+            signUp();
+    }
 
     return (
-        <div className="signup">
+        <>
+        {/*<div className="signup">
             <h1>Sign up</h1>
             <div className="signup-labels">
                 <div className="signup-label">Username:</div>
@@ -59,6 +64,45 @@ export default function SignUpComponent() {
             </div>
             <div className="signup-button-div"><button onClick={signUp} className="signup-button">Sign up</button></div>
             <p className="message-signup">{message}</p>
+        </div>*/}
+        <div className="signup">
+            <h1>Sign up</h1>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Username:</td>
+                        <td>
+                            <input ref={usernameInput} type="text" placeholder="username"
+                                onKeyDown={handleEnter}/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>
+                            <input ref={emailInput} type="email" placeholder="email" 
+                                onKeyDown={handleEnter}/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Password:</td>
+                        <td>
+                            <input ref={passwordInput} type="password" placeholder="password"
+                                onKeyDown={handleEnter}/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Password again:</td>
+                        <td>
+                            <input ref={passwordAgainInput} type="password" placeholder="password again"
+                                onKeyDown={handleEnter}/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div className="signup-button-div">
+                <button onClick={signUp} className="signup-button shadow-button">Sign up</button>
+            </div>
         </div>
+        </>
     );
 }

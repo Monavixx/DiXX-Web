@@ -12,7 +12,6 @@ export default function Header() {
     const isUserDataPending = useSelector(state=>state.user.is_pending);
     const menu = useRef(null);
     const menuButton = useRef(null);
-    const menuButton2 = useRef(null);
     const timeoutId = useRef(null);
     const location = useLocation();
 
@@ -39,8 +38,6 @@ export default function Header() {
         if((menuButton.current.classList.contains('header-menu-button-toggle-off') || force===true) && force !== false) {
             menuButton.current.classList.remove('header-menu-button-toggle-off');
             menuButton.current.classList.add('header-menu-button-toggle-on');
-            menuButton2.current.classList.remove('header-menu-button-toggle-off');
-            menuButton2.current.classList.add('header-menu-button-toggle-on');
             menu.current.style.display = 'flex';
             menu.current.classList.remove('menu-toggle-off');
             clearTimeout(timeoutId);
@@ -48,8 +45,6 @@ export default function Header() {
         else if (!menuButton.current.classList.contains('header-menu-button-toggle-off') || force===false){
             menuButton.current.classList.add('header-menu-button-toggle-off');
             menuButton.current.classList.remove('header-menu-button-toggle-on');
-            menuButton2.current.classList.add('header-menu-button-toggle-off');
-            menuButton2.current.classList.remove('header-menu-button-toggle-on');
             menu.current.classList.add('menu-toggle-off');
 
             //Here the ms timeout must be the same as in css
@@ -72,13 +67,7 @@ export default function Header() {
             </div>
         </div>
         <div className="menu menu-toggle-off" ref={menu}>
-            <div className='menu-parent-menu-button'>
-                <div ref={menuButton2} className="header-menu-button header-menu-button-toggle-off" onClick={toggleMenuButton}>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </div>
+            
             <div className="menu-top-refs">
                 <div className="menu-create-new-set-ref menu-ref">
                     <Link to='/create-new-set'><div>Create new set</div></Link>

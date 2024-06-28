@@ -29,12 +29,30 @@ export default function Profile() {
     }
     return (
         <>
-        <div className="profile">
+        {/*<div className="profile">
             <h1>Profile</h1>
             <p className="profile-full-data">Username: 
                 <span className="profile-data"> {username}</span></p>
             <p className="profile-full-data">Email: <span className="profile-data"> {email}</span></p>
             <div className="button-logout-div"><button onClick={logout} className="profile-logout-button">logout</button></div>
+        </div>*/}
+        <div className="profile">
+            <h1>Profile</h1>
+            <table cellPadding="4" >
+                <tbody>
+                    <tr>
+                        <td>Username:</td>
+                        <td>{username}</td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>{email}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div className="profile-logout-div">
+                <button className="shadow-button" onClick={logout}>Log out</button>
+            </div>
         </div>
         </>
     )

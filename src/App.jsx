@@ -34,21 +34,28 @@ function App() {
     <>
       <AutoLoginComponent/>
       <Header/>
-      <div className='center-content'>
-        <Routes>
-          <Route path='/' element={<h1>home</h1>} />
-          <Route path='/login' element={<LoginComponent/>} />
-          <Route path='/profile' element={<Profile/>}/>
-          <Route path='/signup' element={<SignUpComponent/>}/>
-          <Route path='/sets/your' element={<YourSetsComponent/>}/>
-          <Route path='/set/:id' element={<SetComponent/>}/>
-          <Route path='/set/:id/edit' element={<EditSetComponent/>}/>
-          <Route path='/set/:id/add-card' element={<AddCardComponent/>}/>
-          <Route path='/create-new-set' element={<CreateNewSetComponent/>} />
-          <Route path='/404' element={'404'}/>
-        </Routes>
+      <div className="all-content">
+        <div className="left-content">
+
+        </div>
+        <div className='center-content'>
+          <Routes>
+            <Route path='/' element={<h1>home</h1>} />
+            <Route path='/login' element={<LoginComponent/>} />
+            <Route path='/profile' element={<Profile/>}/>
+            <Route path='/signup' element={<SignUpComponent/>}/>
+            <Route path='/sets/your' element={<YourSetsComponent/>}/>
+            <Route path='/set/:id' element={<SetComponent/>}/>
+            <Route path='/set/:id/edit' element={<EditSetComponent/>}/>
+            <Route path='/set/:id/add-card' element={<AddCardComponent/>}/>
+            <Route path='/create-new-set' element={<CreateNewSetComponent/>} />
+            <Route path='/404' element={'404'}/>
+          </Routes>
+        </div>
+        <div className="right-content">
+          
+        </div>
       </div>
-      
     </>
   );
 }

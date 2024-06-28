@@ -38,9 +38,16 @@ function LoginComponent() {
             setIsLoading(false);
         });
     }
+
+    function handleEnter(e) {
+        if(e.key === 'Enter') {
+            login();
+        }
+    }
     
     return (
-        <div className="logincomponent">
+        <>
+        {/*<div className="logincomponent">
             <p className='login-h'>{isLoading ? "Loading..." : "Please, log in"}</p>
             <div className='login-labels'>
                 <div className="login-label">Username:</div>
@@ -55,7 +62,33 @@ function LoginComponent() {
             </div>
             <button onClick={login} className='login-button'>login</button>
             <div className='login-ref-to-signup'><Link to='/signup'>don't have an account?</Link></div>
+        </div>*/}
+        <div className="logincomponent">
+            <p className='login-h'>{isLoading ? "Loading..." : "Please, log in"}</p>
+            <table cellPadding="3">
+                <tbody>
+                    <tr>
+                        <td>Username:</td>
+                        <td>
+                            <input className='login-input' ref={usernameInput} type="text" 
+                                placeholder='username' onKeyDown={handleEnter}/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Password:</td>
+                        <td>
+                            <input className='login-input' ref={passwordInput} type="password" placeholder='password'
+                                onKeyDown={handleEnter}/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div className='login-button-div'>
+                <button onClick={login} className='shadow-button'>Log in</button>
+            </div>
+            <div className='login-ref-to-signup'><Link to='/signup'>don't have an account?</Link></div>
         </div>
+        </>
     );
 }
 
