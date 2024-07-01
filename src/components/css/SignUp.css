@@ -4,43 +4,61 @@
     padding: 15px;
     border-radius: 10%;
     width:max-content;
+    font-size: 1.2em;
+    display: flex;
+    flex-direction: column;
+}
+@media (max-width: 540px) {
+    .signup {
+        font-size: 1.1em;
+    }
 }
 @media (max-width: 500px) {
     .signup {
         margin-left:auto;
         margin-right: auto;
+        font-size: 1em;
     }
 }
 @media (max-width: 440px) {
     .signup {
         width: auto;
         margin: 0 10px;
+        font-size: calc(5vw);
     }
 }
 
 
 .signup h1 {
     text-align: center;
+    font-size: 1.6em;
 }
 
 .signup table tbody tr td:first-child {
     text-align: right;
 }
+.signup table {
+    font-size: 0.8em;
+}
+.signup table tbody tr td input {
+    font-size: 0.8em;
+}
 
 .signup-button-div {
-    clear:both;
-    width: auto;
     margin-top: 15px;
+    align-self: center;
+    width: 40%;
 }
 .signup-button {
-    width: 40%;
-    font-size: 1.5rem;
+    width: 100%;
+    font-size: 1.3em;
     background-color: rgb(62, 63, 62);
     color:rgb(219, 219, 219);
     border:0;
     border-radius: 35%;
     padding: 5px 0;
     text-align: center;
+
 }
 .message-signup {
     color: red;

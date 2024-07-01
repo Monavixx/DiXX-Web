@@ -2,9 +2,9 @@ import { useSelector } from 'react-redux';
 import './css/Header.css';
 import {Link, useLocation} from 'react-router-dom';
 import React, {useRef, useEffect} from 'react';
-import {rootdom} from '../index.jsx';
 import { API_URL } from '../settings.js';
 import { useIsAuthenticated } from '../functions/auth.js';
+import Hammer from 'hammerjs';
 
 export default function Header() {
     const username = useSelector(state=>state.user.name);
@@ -17,9 +17,30 @@ export default function Header() {
 
     useEffect(()=>{
         document.body.onclick = (e) =>{
-            if(e.target === rootdom)
-            toggleMenuButton(false);
+            if(!menu.current.contains(e.target) && !menuButton.current.contains(e.target))
+                toggleMenuButton(false);
         };
+        // Menu swipe
+        const hammer = new Hammer(menu.current);
+
+        function handleSwipe(e) {
+            if(e.direction === Hammer.DIRECTION_LEFT) {
+                toggleMenuButton(false);
+            }
+        }
+        hammer.on('swipe', handleSwipe);
+
+        // Menu open if mouse in the left
+        function handleMouseMove(e) {
+            if(e.clientX === 0) {
+                toggleMenuButton(true);
+            }
+        }
+        document.addEventListener('mousemove', handleMouseMove);
+        return () => {
+            hammer.off('swipe', handleSwipe);
+            document.removeEventListener('mousemove', handleMouseMove);
+        }
     },[]);
 
     useEffect(()=>{
@@ -54,7 +75,7 @@ export default function Header() {
 
     return (
         <>
-        <div className="header">
+        <div className="header" >
             <div ref={menuButton} className="header-menu-button header-menu-button-toggle-off" onClick={toggleMenuButton}>
                 <div></div>
                 <div></div>

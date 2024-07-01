@@ -44,57 +44,37 @@ export default function SignUpComponent() {
 
     return (
         <>
-        {/*<div className="signup">
-            <h1>Sign up</h1>
-            <div className="signup-labels">
-                <div className="signup-label">Username:</div>
-                <div className="signup-label">Email:</div>
-                <div className="signup-label">Password: </div>
-                <div className="signup-label">Password again:</div>
-            </div>
-            <div className="signup-form">
-                <input ref={usernameInput} type="text" placeholder="username"
-                    onKeyDown={(e)=>{if(e.key==='Enter')signUp()}}/>
-                <input ref={emailInput} type="email" placeholder="email" 
-                    onKeyDown={(e)=>{if(e.key==='Enter')signUp()}}/>
-                <input ref={passwordInput} type="password" placeholder="password"
-                    onKeyDown={(e)=>{if(e.key==='Enter')signUp()}}/>
-                <input ref={passwordAgainInput} type="password" placeholder="password again"
-                    onKeyDown={(e)=>{if(e.key==='Enter')signUp()}}/>
-            </div>
-            <div className="signup-button-div"><button onClick={signUp} className="signup-button">Sign up</button></div>
-            <p className="message-signup">{message}</p>
-        </div>*/}
+        
         <div className="signup">
             <h1>Sign up</h1>
-            <table>
+            <table cellPadding={2}>
                 <tbody>
                     <tr>
                         <td>Username:</td>
                         <td>
                             <input ref={usernameInput} type="text" placeholder="username"
-                                onKeyDown={handleEnter}/>
+                                onKeyDown={handleEnter} className="input"/>
                         </td>
                     </tr>
                     <tr>
                         <td>Email:</td>
                         <td>
                             <input ref={emailInput} type="email" placeholder="email" 
-                                onKeyDown={handleEnter}/>
+                                onKeyDown={handleEnter} className="input"/>
                         </td>
                     </tr>
                     <tr>
                         <td>Password:</td>
                         <td>
                             <input ref={passwordInput} type="password" placeholder="password"
-                                onKeyDown={handleEnter}/>
+                                onKeyDown={handleEnter} className="input"/>
                         </td>
                     </tr>
                     <tr>
                         <td>Password again:</td>
                         <td>
                             <input ref={passwordAgainInput} type="password" placeholder="password again"
-                                onKeyDown={handleEnter}/>
+                                onKeyDown={handleEnter} className="input"/>
                         </td>
                     </tr>
                 </tbody>
@@ -102,6 +82,7 @@ export default function SignUpComponent() {
             <div className="signup-button-div">
                 <button onClick={signUp} className="signup-button shadow-button">Sign up</button>
             </div>
+            <p className="message-signup">{message}</p>
         </div>
         </>
     );

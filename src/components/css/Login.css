@@ -49,11 +49,7 @@
 }
 
 .login-input {
-    font-size: 0.8em;
-    padding: 5px 7px;
-    background-color: rgb(54, 54, 56);
-    border: none;
-    color: inherit;
+    
 }
 .login-input::placeholder {
     color: rgb(146, 146, 146);

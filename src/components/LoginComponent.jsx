@@ -47,22 +47,6 @@ function LoginComponent() {
     
     return (
         <>
-        {/*<div className="logincomponent">
-            <p className='login-h'>{isLoading ? "Loading..." : "Please, log in"}</p>
-            <div className='login-labels'>
-                <div className="login-label">Username:</div>
-                <div className="login-label">Password:</div>
-            </div>
-            <div className="login-form">
-                <input ref={usernameInput} type="text" placeholder='username'
-                    onKeyDown={(e)=>{if(e.key==='Enter')login()}}/>
-                <input ref={passwordInput} type="password" placeholder='password'
-                    onKeyDown={(e)=>{if(e.key==='Enter')login()}}/>
-                
-            </div>
-            <button onClick={login} className='login-button'>login</button>
-            <div className='login-ref-to-signup'><Link to='/signup'>don't have an account?</Link></div>
-        </div>*/}
         <div className="logincomponent">
             <p className='login-h'>{isLoading ? "Loading..." : "Please, log in"}</p>
             <table cellPadding="3">
@@ -70,14 +54,14 @@ function LoginComponent() {
                     <tr>
                         <td>Username:</td>
                         <td>
-                            <input className='login-input' ref={usernameInput} type="text" 
+                            <input className='login-input input' ref={usernameInput} type="text" 
                                 placeholder='username' onKeyDown={handleEnter}/>
                         </td>
                     </tr>
                     <tr>
                         <td>Password:</td>
                         <td>
-                            <input className='login-input' ref={passwordInput} type="password" placeholder='password'
+                            <input className='login-input input' ref={passwordInput} type="password" placeholder='password'
                                 onKeyDown={handleEnter}/>
                         </td>
                     </tr>
