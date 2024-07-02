@@ -1,21 +1,50 @@
 .your-sets {
-
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    
 }
 .your-sets h1 {
-
+    text-align: center;
 }
 .your-sets-container {
     display: flex;
     flex-wrap: wrap;
     gap:15px;
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
 }
+
+@media (max-width: 440px) {
+    .your-sets {
+        width: 100%;
+    }
+    .your-sets-container {
+        padding: 2vw;
+    }
+
+}
+
 .your-sets-set {
     background-color: rgb(29, 29, 31);
     padding: 15px;
     border-radius: 10px;
-    width:40%;
-    
+    width:300px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
 }
+
+@media (max-width: 440px) {
+    .your-sets-set {
+        width: 100%;
+    }
+}
+
+
 .your-sets-set h2 {
     text-align: center;
     max-width: 400px;
@@ -41,6 +70,7 @@
 
 .your-sets-set-link {
     color: inherit;
+    
 }
 .your-sets-set-div-link {
     width: 35%;
@@ -53,21 +83,14 @@
     border: none;
     color: inherit;
     padding: 5px 0;
-    box-shadow: -1px 2px 3px black;
-}
-.your-sets-set-link button:hover {
-    background-color: rgb(70, 75, 80);
-    box-shadow: -2px 3px 3px black;
-}
-.your-sets-set-link button:active {
-    background-color: rgb(84, 90, 97);
-    box-shadow: 0px 1px 3px black;
 }
 
 .your-sets-button-and-created-by {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: auto;
+
 }
 .your-sets-set-created-by-and-number-of-cards {
     display: flex;

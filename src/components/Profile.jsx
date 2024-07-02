@@ -19,7 +19,6 @@ export default function Profile() {
         // then checkForLogin has already called in AutoLoginComponent,
         // and it's not necessary to call it twice.
         if(wasLocationUpdated ) {
-            console.log('check');
             API.checkForLogin();
         }
     },[wasLocationUpdated]);
@@ -29,24 +28,17 @@ export default function Profile() {
     }
     return (
         <>
-        {/*<div className="profile">
-            <h1>Profile</h1>
-            <p className="profile-full-data">Username: 
-                <span className="profile-data"> {username}</span></p>
-            <p className="profile-full-data">Email: <span className="profile-data"> {email}</span></p>
-            <div className="button-logout-div"><button onClick={logout} className="profile-logout-button">logout</button></div>
-        </div>*/}
         <div className="profile">
             <h1>Profile</h1>
             <table cellPadding="4" >
                 <tbody>
                     <tr>
                         <td>Username:</td>
-                        <td>{username}</td>
+                        <td><div>{username}</div></td>
                     </tr>
                     <tr>
                         <td>Email:</td>
-                        <td>{email}</td>
+                        <td><div>{email}</div></td>
                     </tr>
                 </tbody>
             </table>

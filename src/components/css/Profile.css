@@ -2,12 +2,13 @@
 
 .profile {
     background-color: rgb(26, 26, 27);
-    width: max-content;
+    width: min(100%, 300px);
     padding: 15px;
     border-radius: 10px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    
 }
 @media (max-width: 500px) {
     .profile {
@@ -17,8 +18,7 @@
 }
 @media (max-width: 440px) {
     .profile {
-        width: auto;
-        margin: 0 10px;
+        width: 100%;
     }
 }
 
@@ -28,6 +28,7 @@
 .profile table {
     border-collapse: collapse;
     font-size: 1.2rem;
+    width: auto;
 }
 @media (max-width: 440px) {
     .profile table {
@@ -46,6 +47,12 @@
     border-bottom: 1px solid rgb(151, 151, 151);
     padding-bottom: 50px;
 }
+.profile table tbody tr td div{
+    overflow-wrap: break-word;
+    
+}
+
+
 
 .profile-logout-div {
     align-self: center;

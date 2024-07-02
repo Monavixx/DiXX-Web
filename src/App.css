@@ -1,3 +1,6 @@
+:root {
+    --side-content-width: min(12vw, 200px);
+}
 
 .all-content {
     display: flex;
@@ -7,23 +10,33 @@
 }
 .left-content {
     box-sizing: border-box;
-    min-width: min(15vw, 200px);
+    min-width: var(--side-content-width);
     flex-grow: 1;
 }
 .right-content {
     box-sizing: border-box;
-    min-width:min(15vw, 200px);
+    min-width: var(--side-content-width);
     flex-grow: 1;
 }
 
 .center-content {    
     box-sizing: border-box;
     font-size: 1.2rem;
-    flex-grow: 3;
+    /*width: calc(100vw - 2 * var(--side-content-width));*/
+    flex-grow: 5;
+    overflow-x: auto;
 }
+.center-content>div {
+    overflow-x: auto;
+}
+
 
 @media (max-width: 440px) {
     .left-content, .right-content {
         display: none;
+    }
+    .center-content {
+        width: 100%;
+        margin: 0 10px;
     }
 }
