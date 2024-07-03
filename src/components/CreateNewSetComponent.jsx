@@ -30,27 +30,26 @@ export default function CreateNewSetComponent() {
     return (
         <>
             <div className="create-new-set">
+                <h1>Create new set</h1>
                 <div className="create-new-set-inputs">
-                    <table>
+                    <table cellPadding='3'>
                         <tbody>
                             <tr>
                                 <td>Name:</td>
                                 <td>
-                                    <input ref={nameInput} type="text" placeholder="name"/>
+                                    <input className="input" ref={nameInput} type="text" placeholder="name"/>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Description:</td>
                                 <td>
-                                    <textarea ref={descriptionInput} placeholder="description"></textarea>
+                                    <textarea className="input" ref={descriptionInput} placeholder="description"></textarea>
                                 </td>
                             </tr>
                             <tr>
+                                <td>Visibility:</td>
                                 <td>
-                                    <label htmlFor="visibility">Visibility:</label>
-                                </td>
-                                <td>
-                                    <select id='visibility' ref={visibilityInput}>
+                                    <select className="input" ref={visibilityInput}>
                                         <option value={false}>Public</option>
                                         <option value={true}>Private</option>
                                     </select>

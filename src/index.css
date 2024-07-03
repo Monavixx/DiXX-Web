@@ -38,4 +38,5 @@ html {
   background-color: rgb(54, 54, 56);
   border: none;
   color: inherit;
+  border-radius: 5px;
 }

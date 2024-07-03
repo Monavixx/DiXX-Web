@@ -19,6 +19,7 @@
 .header-dixx{
     margin-left: min(170px, 15vw);
     z-index: 2;
+    user-select: none;
 }
 .header-dixx a{
     font-size: 2.5rem;
@@ -97,6 +98,11 @@
     justify-content: space-evenly;
     margin-left: min(20px, 3vw);
     z-index: 2;
+    box-shadow: -2px 3px 3px black;
+    transition: 0.5s box-shadow;
+}
+.header-menu-button-toggle-on {
+    box-shadow: -2px 3px 10px black;
 }
 
 

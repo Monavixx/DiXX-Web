@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { get_request_json } from "../functions/send_request";
 import { Link } from "react-router-dom";
 import './css/YourSets.css';
 import { useLayoutEffectOnLoadUserData } from '../functions/useEffectOnLoadUserData';
@@ -40,7 +39,7 @@ export default function YourSetsComponent() {
                         <div className="your-sets-button-and-created-by">
                             <div className="your-sets-set-div-link"><Link className="your-sets-set-link" to={`/set/${e.id}`}><button className="shadow-button">Open</button></Link></div>
                             <div className="your-sets-set-created-by-and-number-of-cards">
-                                <div>{e.numberOfCards} words</div>
+                                <div>{e.numberOfCards} cards</div>
                                 <div className="your-sets-set-created-by">*Created by <span className="your-sets-set-author">{e.author}</span></div>
                                 
                             </div>

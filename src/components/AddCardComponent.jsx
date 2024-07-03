@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { API } from "../API";
+import './css/AddCard.css';
 
 
 export default function AddCardComponent({setCards}) {
@@ -38,11 +39,27 @@ export default function AddCardComponent({setCards}) {
 
     return (
         <>
-            <div>
-                <input ref={firstInput} type="text" placeholder="word" onKeyDown={keyDown}/>
-                <input ref={secondInput} type="text" placeholder="meaning" onKeyDown={keyDown}/>
-                <button onClick={addCard}>Add</button>
-                <div>{errors !== null && Object.entries(errors).map((k,v)=>{return k + ': ' + v + '; ';})}</div>
+            <div className="add-card">
+                <table cellPadding='2'>
+                    <tbody>
+                        <tr>
+                            <td>Front:</td>
+                            <td>
+                                <input className="input" ref={firstInput} type="text" placeholder="word" onKeyDown={keyDown}/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Back:</td>
+                            <td>
+                                <input className="input" ref={secondInput} type="text" placeholder="meaning" onKeyDown={keyDown}/>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div className="add-card-button-div">
+                    <button className="shadow-button" onClick={addCard}>Add</button>
+                </div>
+                <div className="add-card-message">{errors !== null && Object.entries(errors).map((k,v)=>{return k + ': ' + v + '; ';})}</div>
             </div>
         </>
     );

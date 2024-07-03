@@ -1,45 +1,38 @@
-.create-new-set {
-    box-sizing: border-box;
-    width: min(100%, 400px);
+.edit-set {
     background-color: rgb(26, 26, 27);
+    width: min(100%, 400px);
+    box-sizing: border-box;
     padding: 15px;
-    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-@media (max-width: 350px) {
-    .create-new-set {
-        font-size: 5vw;
-    }
+    border-radius: 10px;
 }
 
-.create-new-set>h1 {
-    font-size: 1.6em;
-}
-.create-new-set-inputs>table>tbody>tr>td:first-child {
+
+.edit-set-inputs>table>tbody>tr>td:first-child {
     text-align: right;
 }
-.create-new-set-inputs textarea {
+.edit-set-inputs textarea {
     resize: none;
     width: 100%;
     box-sizing: border-box;
     height: 8vh;
 }
-.create-new-set-inputs input[type='text'] {
+.edit-set-inputs input[type='text'] {
     width: 100%;
     box-sizing: border-box;
 }
-.create-new-set-inputs select {
+.edit-set-inputs select {
     width: 50%;
     box-sizing: 100%;
     text-align: center;
 }
 
-.create-new-set-button-div {
+.edit-set-apply-button-div {
     width: 50%;
 }
-.create-new-set-button-div button {
+.edit-set-apply-button-div button {
     border-radius: 10px;
     font-size: 1.1em;
     padding: 8px 15px;

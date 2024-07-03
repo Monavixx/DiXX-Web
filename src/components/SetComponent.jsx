@@ -53,7 +53,7 @@ export default function SetComponent() {
             setSet(prev => ({...prev, is_your_one:true}));
         });
     }
-
+    /*
     function addRemoveSet(e) {
         e.preventDefault();
         if(e.target.checked) {
@@ -62,7 +62,7 @@ export default function SetComponent() {
         else {
             removeSet();
         }
-    }
+    }*/
 
 
     if(isLoading) return "Loading...";
@@ -79,7 +79,7 @@ export default function SetComponent() {
             <div className="set-info-description">{set.description}</div>
             <div className="set-info-words-and-author">
                 <div className="set-info-number-and-is-private">
-                    <div className="set-info-number-of-cards">The set contains {set.numberOfCards} words</div>
+                    <div className="set-info-number-of-cards">The set contains {set.numberOfCards} cards</div>
                     <div className="set-info-is-private">Visibility: {set.is_private ? 'Private' : 'Public'}</div>
                 </div>
                 <div className="set-info-author-and-datetime">
@@ -88,14 +88,18 @@ export default function SetComponent() {
                 </div>
             </div>
             <div className="set-buttons-container">
-                <button className="set-button-learn" onClick={learn} >Learn</button>
-                <button className="set-button-edit" onClick={editSet}>Edit</button>
-                {/*<button className="set-button-remove" onClick={removeSet}>Remove</button>*/}
+                <button className="set-button-learn shadow-button" onClick={learn} >Learn</button>
+                <button className="set-button-edit shadow-button" onClick={editSet}>Edit</button>
+                { set.is_your_one ?
+                    <button className="set-button-remove shadow-button" onClick={removeSet}>Remove</button>
+                :
+                    <button className="set-button-add shadow-button" onClick={addSet}>Add</button>
+                }
             </div>
-            <div>
+            {/*<div>
                 <label htmlFor="isYourOne">add/remove</label>
                 <input type="checkbox" id='isYourOne' checked={set.is_your_one} onChange={addRemoveSet} />
-            </div>
+            </div>*/}
         </div>
     );
 }

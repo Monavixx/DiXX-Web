@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { API } from "../API";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import AddCardComponent from "./AddCardComponent";
 import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
-
+import './css/EditSet.css';
 
 export default function EditSetComponent() {
     const [set, setSet] = useState(null);
@@ -12,6 +12,10 @@ export default function EditSetComponent() {
 
     const [isLoading, setIsLoading] = useState(true);
     const [message, setMessage] = useState('');
+
+    const nameInput = useRef(null);
+    const descriptionInput = useRef(null);
+    const visibilityInput = useRef(null);
 
     useGoToLoginIfNotAuthenticated();
 
@@ -25,12 +29,18 @@ export default function EditSetComponent() {
             });
             setCards(data.data.card_set);
             setIsLoading(false);
-        }).catch(()=>{})
-        .finally(()=> {});
-    },[]);
+            console.log(nameInput.current);
+        });
+    },[id]);
 
     function editSet() {
-        API.editSet(id, set.name, set.description, set.is_private).then(()=> {
+        const newSet = {
+            name: nameInput.current.value,
+            description: descriptionInput.current.value,
+            is_private: visibilityInput.current.value
+        };
+        setSet(newSet);
+        API.editSet(id, newSet.name, newSet.description, newSet.is_private).then(()=> {
             setMessage('success');
         }).catch(([data,status])=> {
             if(status === 403)
@@ -43,20 +53,6 @@ export default function EditSetComponent() {
         });
     }
 
-    function handleChange(e) {
-        setSet( prev => ({
-            ...prev,
-            [e.target.name]: e.target.value
-        }));
-    }
-
-    function handleCheckboxChange(e) {
-        setSet( prev => ({
-            ...prev,
-            [e.target.name]: e.target.checked
-        }));
-    }
-
     function deleteCard(e) {
         const cardId = Number(e.target.getAttribute('card-id'));
         API.deleteCard(cardId).then(()=> {
@@ -66,19 +62,50 @@ export default function EditSetComponent() {
         });
     }
 
+    function handleEnter(e) {
+        if(e.key === 'Enter') {
+            editSet();
+        }
+    }
+
     if(isLoading) return 'Loading...';
 
     return (
-        <>
-            <div> 
-                <input type="text" value={set.name} placeholder="name" name='name' onChange={handleChange}/>
-                <textarea placeholder="description" name='description' onChange={handleChange} defaultValue={set.description}></textarea>
-                <input type="checkbox" checked={set.is_private} name='is_private' onChange={handleCheckboxChange}/>
-                <button onClick={editSet}>Apply</button>
-                <div>{message}</div>
+        <div className="edit-set">
+            <h1>Edit set</h1>
+            <div className="edit-set-inputs">
+                <table cellPadding='3'>
+                    <tbody>
+                        <tr>
+                            <td>Name:</td>
+                            <td>
+                                <input ref={nameInput} className="input" type="text" defaultValue={set.name} placeholder="name" onKeyDown={handleEnter}/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Description:</td>
+                            <td>
+                                <textarea ref={descriptionInput} className="input" defaultValue={set.description} placeholder="description" onKeyDown={handleEnter} ></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Visibility:</td>
+                            <td>
+                                <select ref={visibilityInput} className="input" defaultValue={set.is_private}>
+                                    <option value={false}>Public</option>
+                                    <option value={true}>Private</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+            <div className="edit-set-apply-button-div">
+                <button className="shadow-button" onClick={editSet}>Apply</button>
+            </div>
+            <div>{message}</div>
+            <hr width='90%' color='30, 30, 30' />
             <div>
-                {/*<Link to={`/set/${id}/add-card/`}><button>Fast add cards</button></Link>*/}
                 <AddCardComponent setCards={setCards}/>
             </div>
             <div>
@@ -90,6 +117,6 @@ export default function EditSetComponent() {
                     </div>
                 )})}
             </div>
-        </>
+        </div>
     );
 }
