@@ -1,12 +1,17 @@
 .edit-set {
     background-color: rgb(26, 26, 27);
-    width: min(100%, 400px);
+    width: min(100%, 500px);
     box-sizing: border-box;
     padding: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 10px;
+}
+@media (max-width: 440px) {
+    .edit-set {
+        font-size: 5vw;
+    }
 }
 
 
@@ -17,7 +22,7 @@
     resize: none;
     width: 100%;
     box-sizing: border-box;
-    height: 8vh;
+    height: 15vh;
 }
 .edit-set-inputs input[type='text'] {
     width: 100%;
@@ -41,4 +46,54 @@
     background-color: rgba(96, 243, 76, 0.397);
     color: inherit;
     margin-top: 15px;
+}
+
+/* list */
+
+.edit-set-list-of-cards {
+    width:90%;
+}
+
+.edit-set-list-of-cards>h2 {
+    text-align: center;
+}
+.edit-set-list-of-cards>table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.edit-set-list-of-cards>table tr>td:nth-child(2) {
+    border-left: 1px solid rgb(62, 62, 65);
+}
+.edit-set-list-of-cards>table>tbody>tr {
+    border-top: 1px solid rgb(62, 62, 65);
+}
+.edit-set-list-of-cards>table>thead>tr>td {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
+.edit-set-list-of-cards>table>thead>tr>td:nth-child(1) {
+    width:40%;
+}
+.edit-set-list-of-cards>table>thead>tr>td:nth-child(2) {
+    width:40%;
+}
+.edit-set-list-of-cards>table>thead>tr>td:nth-child(3) {
+    width:20%;
+}
+
+
+.edit-set-list-of-cards>table>tbody>tr>td>div {
+    word-break: break-all;
+    font-size: 0.85em;
+}
+
+.edit-set-delete-card-button {
+    background-color: rgba(243, 61, 61, 0.76);
+    border:none;
+    border-radius: 30px;
+    color: inherit;
+    font-size: 0.8em;
+    padding: 2px 10px;
 }

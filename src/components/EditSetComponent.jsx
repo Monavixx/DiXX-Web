@@ -105,17 +105,33 @@ export default function EditSetComponent() {
             </div>
             <div>{message}</div>
             <hr width='90%' color='30, 30, 30' />
-            <div>
-                <AddCardComponent setCards={setCards}/>
-            </div>
-            <div>
-                {cards?.map(v => {
-                return (
-                    <div>
-                        <div>{v.first} - {v.second}</div>
-                        <button onClick={deleteCard} card-id={v.id}>Delete</button>
-                    </div>
-                )})}
+            
+            <AddCardComponent setCards={setCards}/>
+            <div className="edit-set-list-of-cards">
+                <h2>
+                    List of cards
+                </h2>
+                <table cellPadding='3'>
+                    <thead>
+                        <tr>
+                            <td>Front</td>
+                            <td>Back</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {cards?.map(v => {
+                        return (
+                            <tr>
+                                <td><div>{v.first}</div></td>
+                                <td><div>{v.second}</div></td>
+                                <td>
+                                    <button className="edit-set-delete-card-button scaled-button shadow-button" onClick={deleteCard} card-id={v.id}>Delete</button>
+                                </td>
+                            </tr>
+                        )})}
+                    </tbody>
+                </table>
+                
             </div>
         </div>
     );

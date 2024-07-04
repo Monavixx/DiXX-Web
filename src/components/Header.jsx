@@ -16,7 +16,7 @@ export default function Header() {
     const location = useLocation();
 
     useEffect(()=>{
-        document.body.onclick = (e) =>{
+        document.onclick = (e) =>{
             if(!menu.current.contains(e.target) && !menuButton.current.contains(e.target))
                 toggleMenuButton(false);
         };
@@ -76,7 +76,7 @@ export default function Header() {
     return (
         <>
         <div className="header" >
-            <div ref={menuButton} className="header-menu-button header-menu-button-toggle-off" onClick={toggleMenuButton}>
+            <div ref={menuButton} className="scaled-button header-menu-button header-menu-button-toggle-off" onClick={toggleMenuButton}>
                 <div></div>
                 <div></div>
                 <div></div>

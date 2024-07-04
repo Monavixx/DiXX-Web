@@ -14,7 +14,6 @@ import { updateLocation } from './slices/locationReduces.js';
 import {useDidUpdateEffect} from './functions/useDidUpdateEffects.js';
 import CreateNewSetComponent from './components/CreateNewSetComponent.jsx';
 import EditSetComponent from './components/EditSetComponent.jsx';
-import AddCardComponent from './components/AddCardComponent.jsx';
 
 function App() {
   const dispatch = useDispatch();

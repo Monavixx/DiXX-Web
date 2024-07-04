@@ -40,3 +40,8 @@
         margin: 0 10px;
     }
 }
+@media (max-width: 830px) {
+    .center-content>div {
+        margin: 0 auto;
+    }
+}
