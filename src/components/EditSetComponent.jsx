@@ -107,10 +107,12 @@ export default function EditSetComponent() {
             <hr width='90%' color='30, 30, 30' />
             
             <AddCardComponent setCards={setCards}/>
+            {cards.length > 0 &&
             <div className="edit-set-list-of-cards">
                 <h2>
                     List of cards
                 </h2>
+                
                 <table cellPadding='3'>
                     <thead>
                         <tr>
@@ -131,8 +133,8 @@ export default function EditSetComponent() {
                         )})}
                     </tbody>
                 </table>
-                
             </div>
+            }
         </div>
     );
 }

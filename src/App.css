@@ -7,6 +7,8 @@
     width:100%;
     justify-content: stretch;
     box-sizing: border-box;
+    min-height: calc(100vh - var(--header-full-height));
+
 }
 .left-content {
     box-sizing: border-box;
@@ -22,9 +24,14 @@
 .center-content {    
     box-sizing: border-box;
     font-size: 1.2rem;
-    /*width: calc(100vw - 2 * var(--side-content-width));*/
     flex-grow: 5;
     overflow-x: auto;
+
+    min-height: 100%;
+    height: auto;
+    
+    /*min-height: 100%;
+    height: auto;*/
 }
 .center-content>div {
     overflow-x: auto;
@@ -36,7 +43,6 @@
         display: none;
     }
     .center-content {
-        width: 100%;
         margin: 0 10px;
     }
 }

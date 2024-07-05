@@ -1,0 +1,103 @@
+.parent-card-learn {
+    width: 100%;
+    height: calc(100vh - var(--header-full-height));
+    display: flex;
+    box-sizing: border-box;
+    
+}
+
+.card-learn {
+    background-color: rgb(29, 29, 31);
+    width: min(400px, 100%);
+    padding: 20px;
+    border-radius: 15px;
+    box-sizing: border-box;
+    transition: transform 0.5s cubic-bezier(.42, 0, .58, 1);
+    margin: 0 auto;
+
+    display: flex;
+    flex-direction: column;
+
+    font-size: min(2.7vw, 1.1rem);
+    height: min(600px, 100%);
+}
+
+@media (max-width: 600px) {
+    .card-learn {
+        font-size: min(3vw, 1rem);
+    }
+}
+@media (max-width: 420px) {
+    .card-learn {
+        font-size: min(4vw, 0.8rem);
+    }
+}
+
+.card-learn-back {
+    transform: rotateY(180deg) scale(-1, 1);
+}
+
+
+.card-learn-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    justify-content: space-evenly;
+    box-sizing: border-box;
+    flex-grow: 1;
+}
+
+.card-learn-buttons  {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    height: max-content;
+    padding-top: 15px;
+}
+
+
+
+
+
+.card-learn-first {
+    text-align: center;
+    font-size:3em;
+    overflow-wrap: break-word;
+    width:100%;
+    box-sizing: border-box;
+}
+
+.card-learn-second {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 2rem;
+    background-color: rgb(60, 60, 65);
+    width: 70%;
+    border-radius: 10px;
+    padding: 5px;
+    overflow-wrap: break-word;
+    height: max-content;
+    box-sizing: border-box;
+}
+
+.card-learn-button {
+    width: 6rem;
+    height: 2.5rem;
+    font-size: 1.4rem;
+    padding: 7px 15px;
+    border-radius: 10px;
+    border: none;
+    color: inherit;
+}
+.card-learn-button-show {
+    background-color: rgb(194, 194, 47);
+}
+.card-learn-button-next {
+    background-color: rgb(36, 165, 64);
+}
+.card-learn-button-hide {
+    background-color: rgb(179, 38, 38);
+}

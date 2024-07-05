@@ -1,18 +1,28 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { API } from "../API";
+import './css/Learn.css';
 
 
 
 export default function LearnComponent({setId}) {
-    const [isShowSecond, setIsShowSecond] = useState(false);
+    const [isBack, setIsBack] = useState(false);
     const [card, setCard] = useState(null);
+    const cardDiv = useRef(null);
 
-    function toggleSecond() {
-        setIsShowSecond(!isShowSecond);
+    let timeoutIdToggleSide = null;
+
+    function toggleSide() {
+        clearTimeout(timeoutIdToggleSide);
+        timeoutIdToggleSide = null;
+
+        cardDiv.current.classList.toggle('card-learn-back');
+        timeoutIdToggleSide = setTimeout(() => {
+            setIsBack(prev=>!prev);
+        }, 250);
     }
     const nextCard = useCallback(() => {
         async function inner() {
-            setIsShowSecond(false);
+            setIsBack(false);
             const [data] = await API.learn(setId);
             setCard(data.data);
         }
@@ -24,19 +34,23 @@ export default function LearnComponent({setId}) {
     }, [nextCard]);
 
     return (
-        <div className="card-learn">
+        <>
+        <div className="parent-card-learn">
+        <div className="card-learn" ref={cardDiv}>
             <div className="card-learn-text">
                 <div className="card-learn-first">{card?.first}</div>
-                <div className="card-learn-second">{ isShowSecond ? card?.second : ''}</div>
+                { isBack && <div className="card-learn-second"> {card?.second} </div> }
             </div>
             <div className="card-learn-buttons">
-                {isShowSecond ?
-                    <button className="card-learn-button card-learn-button-hide" onClick={toggleSecond}>Hide</button>
+                {isBack ?
+                    <button className="card-learn-button card-learn-button-hide shadow-button scaled-button" onClick={toggleSide}>Hide</button>
                     :
-                    <button className="card-learn-button card-learn-button-show" onClick={toggleSecond}>Show</button>
+                    <button className="card-learn-button card-learn-button-show shadow-button scaled-button" onClick={toggleSide}>Show</button>
                 }
-                <button className="card-learn-button card-learn-button-next" onClick={nextCard}>Next</button>
+                <button className="card-learn-button card-learn-button-next shadow-button scaled-button" onClick={nextCard}>Next</button>
             </div>
         </div>
+        </div>
+        </>
     );
 }

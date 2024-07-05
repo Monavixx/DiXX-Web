@@ -91,7 +91,7 @@ export default function Header() {
             
             <div className="menu-top-refs">
                 <div className="menu-create-new-set-ref menu-ref">
-                    <Link to='/create-new-set'><div>Create new set</div></Link>
+                    <Link to='/create-new-set'><div className='shadow-button'>Create new set</div></Link>
                 </div>
                 <div className="menu-sets-refs">
                     <div className="menu-your-sets-ref menu-ref">

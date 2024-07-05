@@ -12,7 +12,7 @@ export function useDidUpdateEffect(fn, inputs) {
         fn();
       } else {
         isMountingRef.current = false;
-      }
+      } // eslint-disable-next-line
     }, inputs);
 }
 export function useDidUpdateLayoutEffect(fn, inputs) {
@@ -27,6 +27,6 @@ export function useDidUpdateLayoutEffect(fn, inputs) {
       fn();
     } else {
       isMountingRef.current = false;
-    }
+    } // eslint-disable-next-line
   }, inputs);
 } 
