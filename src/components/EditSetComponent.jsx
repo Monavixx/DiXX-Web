@@ -12,6 +12,7 @@ export default function EditSetComponent() {
 
     const [isLoading, setIsLoading] = useState(true);
     const [message, setMessage] = useState('');
+    const [visibilityChoices, setVisibilityChoices] = useState([]);
 
     const nameInput = useRef(null);
     const descriptionInput = useRef(null);
@@ -25,11 +26,11 @@ export default function EditSetComponent() {
             setSet({
                 name: data.data.name,
                 description: data.data.description,
-                is_private: data.data.is_private
+                visibility: data.data.visibility
             });
             setCards(data.data.card_set);
+            setVisibilityChoices(data.data.visibility_choices);
             setIsLoading(false);
-            console.log(nameInput.current);
         });
     },[id]);
 
@@ -37,10 +38,10 @@ export default function EditSetComponent() {
         const newSet = {
             name: nameInput.current.value,
             description: descriptionInput.current.value,
-            is_private: visibilityInput.current.value
+            visibility: visibilityInput.current.value
         };
         setSet(newSet);
-        API.editSet(id, newSet.name, newSet.description, newSet.is_private).then(()=> {
+        API.editSet(id, newSet.name, newSet.description, newSet.visibility).then(()=> {
             setMessage('success');
         }).catch(([data,status])=> {
             if(status === 403)
@@ -91,9 +92,10 @@ export default function EditSetComponent() {
                         <tr>
                             <td>Visibility:</td>
                             <td>
-                                <select ref={visibilityInput} className="input" defaultValue={set.is_private}>
-                                    <option value={false}>Public</option>
-                                    <option value={true}>Private</option>
+                                <select ref={visibilityInput} className="input" defaultValue={set.visibility}>
+                                    {visibilityChoices.map(([v, s]) => {
+                                        return <option key={v} value={v}>{s}</option>
+                                    })}
                                 </select>
                             </td>
                         </tr>
@@ -121,9 +123,9 @@ export default function EditSetComponent() {
                         </tr>
                     </thead>
                     <tbody>
-                        {cards?.map(v => {
+                        {cards?.map((v, i) => {
                         return (
-                            <tr>
+                            <tr key={i}>
                                 <td><div>{v.first}</div></td>
                                 <td><div>{v.second}</div></td>
                                 <td>

@@ -1,6 +1,6 @@
 .parent-card-learn {
     width: 100%;
-    height: calc(100vh - var(--header-full-height));
+    height: var(--content-min-height);
     display: flex;
     box-sizing: border-box;
     

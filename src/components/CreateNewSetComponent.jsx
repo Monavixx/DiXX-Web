@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { API } from "../API";
 import { useNavigate } from "react-router-dom";
 import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
@@ -10,14 +10,23 @@ export default function CreateNewSetComponent() {
     const visibilityInput = useRef(null);
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useGoToLoginIfNotAuthenticated();
+
+    useEffect(() => {
+        API.getDataForCreatingSet().then(([data_])=> {
+            setData(data_.data);
+            setIsLoading(false);
+        });
+    }, []);
     
     function createNewSet() {
         API.createNewSet({
             name: nameInput.current.value,
             description: descriptionInput.current.value,
-            is_private: visibilityInput.current.value
+            visibility: visibilityInput.current.value
         }).then(([data]) => {
             navigate(`/set/${data.data.id}`);
         }).catch(([data]) => {
@@ -50,8 +59,9 @@ export default function CreateNewSetComponent() {
                                 <td>Visibility:</td>
                                 <td>
                                     <select className="input" ref={visibilityInput}>
-                                        <option value={false}>Public</option>
-                                        <option value={true}>Private</option>
+                                        {!isLoading && data.visibility_choices.map(([v, s]) => {
+                                            return <option key={v} value={v}>{s}</option>
+                                        })}
                                     </select>
                                 </td>
                             </tr>

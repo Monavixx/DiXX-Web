@@ -16,11 +16,11 @@ export const API = {
           store.dispatch(logoutAction());
         }
     },
-    createNewSet: async({name, description, is_private}) => {
+    createNewSet: async({name, description, visibility}) => {
       return post_request_json('cards/create-new-set/', {
         name: name,
         description: description,
-        is_private: is_private
+        visibility: visibility
       })
       .then(([data, status]) => {
         return new Promise((resolve, reject)=>{
@@ -77,8 +77,11 @@ export const API = {
     getSetAndItsCards: async(id) => {
       return API.__getSet(id, [
         'id', 'name', 'description', 'card_set',
-        'create_datetime','author','is_private','numberOfCards'
+        'create_datetime','author','visibility','numberOfCards', 'visibility_choices'
       ]);
+    },
+    getDataForCreatingSet: async() => {
+      return get_request_json('cards/data-for-creating-set/');
     },
 
     signUp: async (username, email, password) => {
@@ -112,11 +115,11 @@ export const API = {
       });
     },
 
-    editSet: async(set_id, set_name, set_description, set_is_private) => {
+    editSet: async(set_id, set_name, set_description, set_visibility) => {
       return put_request_json(`cards/edit-set/${set_id}/`, {
         name: set_name,
         description: set_description,
-        is_private: set_is_private
+        visibility: set_visibility
       }).then(([data, status]) => {
         return new Promise((resolve, reject) => {
           if(status === 200) {

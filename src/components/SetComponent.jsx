@@ -80,7 +80,7 @@ export default function SetComponent() {
             <div className="set-info-words-and-author">
                 <div className="set-info-number-and-is-private">
                     <div className="set-info-number-of-cards">The set contains {set.numberOfCards} cards</div>
-                    <div className="set-info-is-private">Visibility: {set.is_private ? 'Private' : 'Public'}</div>
+                    <div className="set-info-is-private">Visibility: {set.visibility === 0 ? 'Private' : 'Public'}</div>
                 </div>
                 <div className="set-info-author-and-datetime">
                     <div className="set-info-author">Created by <span>{set.author}</span></div>
