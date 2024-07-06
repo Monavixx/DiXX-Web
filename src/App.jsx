@@ -14,6 +14,7 @@ import { updateLocation } from './slices/locationReduces.js';
 import {useDidUpdateEffect} from './functions/useDidUpdateEffects.js';
 import CreateNewSetComponent from './components/CreateNewSetComponent.jsx';
 import EditSetComponent from './components/EditSetComponent.jsx';
+import FriendsComponent from './components/friends/FriendsComponent.jsx';
 
 function App() {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ function App() {
             <Route path='/set/:id' element={<SetComponent/>}/>
             <Route path='/set/:id/edit' element={<EditSetComponent/>}/>
             <Route path='/create-new-set' element={<CreateNewSetComponent/>} />
+            <Route path='/friends' element={<FriendsComponent/>} />
             <Route path='/404' element={'404'}/>
           </Routes>
         </div>

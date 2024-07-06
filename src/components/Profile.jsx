@@ -1,13 +1,15 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import "./css/Profile.css";
 import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
 import { API } from "../API";
 import { useEffect } from "react";
+import { logoutAction } from "../slices/userReducer";
 
 
 export default function Profile() {
     const username = useSelector(state=>state.user.name);
     const email = useSelector(state=>state.user.email);
+    const dispatch = useDispatch();
 
     const wasLocationUpdated = useSelector(state=>state.location.wasUpdated);
     
@@ -24,7 +26,8 @@ export default function Profile() {
     },[wasLocationUpdated]);
 
     function logout() {
-        API.logout();
+        localStorage.removeItem('token');
+        dispatch(logoutAction());
     }
     return (
         <>

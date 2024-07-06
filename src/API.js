@@ -5,6 +5,10 @@ import { loginAction, logoutAction, pending } from "./slices/userReducer.js";
 export const API = {
     checkForLogin: async ()=> {
         store.dispatch(pending(true));
+        if(localStorage.getItem('token') === null) {
+          store.dispatch(logoutAction());
+          return;
+        }
         const [data, status] = await get_request_json('login/');
         if(status === 200) {
             store.dispatch(loginAction({
@@ -49,6 +53,7 @@ export const API = {
           store.dispatch(loginAction({name:data.data.username,
             email:data.data.email
           }));
+          localStorage.setItem('token', data.data.token);
           resolve([data, status]);
         }
         else {
@@ -58,14 +63,13 @@ export const API = {
       });
     },
 
-    logout: async()=>{
+    regenerateToken: async()=>{
       store.dispatch(pending(true));
-      const [,status] = await get_request_json('logout/');
-      if(status !== 200) {
-        console.log('LOGOUT ERROR');
-        return;
+      const [data,status] = await get_request_json('regenerate-token/');
+      if(status === 200) {
+        localStorage.setItem('token', data.data.token);
       }
-      store.dispatch(logoutAction());
+      store.dispatch(pending(false));
     },
 
     __getSet: async(id, fields = []) => {
@@ -180,5 +184,18 @@ export const API = {
           reject([data, status]);
         }
       });
+    },
+
+
+    sendFriendRequest: async(username) => {
+      return post_request_json('friends/request/', {'receiver_username': username});
+    },
+
+    acceptFriendRequest: async(request_id) => {
+      return post_request_json('friends/accept/', {'request_id': request_id});
+    },
+
+    getFriends: async() => {
+      return get_request_json('friends/list/');
     }
 }

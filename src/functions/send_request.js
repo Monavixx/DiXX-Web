@@ -10,6 +10,8 @@ export async function post_request(url, json_obj=null, extra_headers={}) {
     extra_headers['Accept'] = 'application/json';
     extra_headers['X-CSRFToken'] = Cookies.get('csrftoken');
     extra_headers['Access-Control-Allow-Origin'] = '*';
+    addAuthorizationHeaderIfAny(extra_headers);
+
     let data = {
         headers:extra_headers,
         method:'post',
@@ -33,6 +35,8 @@ export async function put_request(url, json_obj=null, extra_headers={}) {
     extra_headers['Accept'] = 'application/json';
     extra_headers['X-CSRFToken'] = Cookies.get('csrftoken');
     extra_headers['Access-Control-Allow-Origin'] = '*';
+    addAuthorizationHeaderIfAny(extra_headers);
+
     let data = {
         headers:extra_headers,
         method:'put',
@@ -54,6 +58,9 @@ export async function get_request(url, json_obj=null, extra_headers={}) {
     url = API_URL + '/' + url;
     extra_headers['Accept'] = 'application/json';
     extra_headers['Access-Control-Allow-Origin'] = '*';
+
+    addAuthorizationHeaderIfAny(extra_headers);
+
     let data = {
         headers:extra_headers,
         method:'get',
@@ -61,8 +68,7 @@ export async function get_request(url, json_obj=null, extra_headers={}) {
         mode: 'cors'
     };
     if(json_obj !== null) {
-        url += '?' + new URLSearchParams(json_obj).toString();
-        
+        url += '?' + new URLSearchParams(json_obj).toString();   
     }
     try {
         return await fetch(url, data);
@@ -71,6 +77,12 @@ export async function get_request(url, json_obj=null, extra_headers={}) {
         console.log(e);
         return null;
     }
+}
+
+function addAuthorizationHeaderIfAny(headers) {
+    const token = localStorage.getItem('token');
+    if(token !== null)
+        headers['Authorization'] = `Token ${token}`;
 }
 
 function handleStatusCode(status, ignoreCodes=[]) {
