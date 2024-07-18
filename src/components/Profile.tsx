@@ -1,17 +1,18 @@
 import { useDispatch, useSelector } from "react-redux"
 import "./css/Profile.css";
-import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
-import { API } from "../API";
+import { useGoToLoginIfNotAuthenticated } from "../functions/redirections.ts";
+import React from "react";
 import { useEffect } from "react";
-import { logoutAction } from "../slices/userReducer";
+import { UserActions } from "../slices/userSlice.ts";
+import { AppDispatch, RootState } from "../store.ts";
 
 
 export default function Profile() {
-    const username = useSelector(state=>state.user.name);
-    const email = useSelector(state=>state.user.email);
-    const dispatch = useDispatch();
+    const username = useSelector<RootState, string>(state=>state.user.name);
+    const email = useSelector<RootState, string>(state=>state.user.email);
+    const dispatch = useDispatch<AppDispatch>();
 
-    const wasLocationUpdated = useSelector(state=>state.location.wasUpdated);
+    const wasLocationUpdated = useSelector<RootState, boolean>(state=>state.location.wasUpdated);
     
 
     useGoToLoginIfNotAuthenticated();
@@ -20,14 +21,13 @@ export default function Profile() {
         // It checks if location has been ever changed. If it hasn't,
         // then checkForLogin has already called in AutoLoginComponent,
         // and it's not necessary to call it twice.
-        if(wasLocationUpdated ) {
-            API.checkForLogin();
+        if(wasLocationUpdated) {
+            dispatch(UserActions.checkIfLoggedIn());
         }
-    },[wasLocationUpdated]);
+    },[wasLocationUpdated, dispatch]);
 
     function logout() {
-        localStorage.removeItem('token');
-        dispatch(logoutAction());
+        dispatch(UserActions.logoutAction());
     }
     return (
         <>

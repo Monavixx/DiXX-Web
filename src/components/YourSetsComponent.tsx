@@ -1,13 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import './css/YourSets.css';
-import { useLayoutEffectOnLoadUserData } from '../functions/useEffectOnLoadUserData';
-import { useIsAuthenticated } from "../functions/auth";
-import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
-import { API } from "../API";
+import { useLayoutEffectOnLoadUserData } from '../functions/useEffectOnLoadUserData.ts';
+import { useIsAuthenticated } from "../functions/auth.ts";
+import { useGoToLoginIfNotAuthenticated } from "../functions/redirections.ts";
+import { API } from "../API.js";
 
 export default function YourSetsComponent() {
-    const [sets, setSets] = useState([]);
+    const [sets, setSets] = useState<any[]>([]);
     const is_authenticated = useIsAuthenticated();
 
     useGoToLoginIfNotAuthenticated();
@@ -17,7 +17,7 @@ export default function YourSetsComponent() {
         if(is_authenticated) {
             API.getYourSets().then(([data]) => {
                 setSets(data.data);
-            });
+            }).catch(()=>{});
         }
     },[is_authenticated]);
     
@@ -33,7 +33,7 @@ export default function YourSetsComponent() {
             <h1>Your sets</h1>
             <div className="your-sets-container">
                 { sets.map((e, i) => { return (
-                    <div className="your-sets-set" key={i}>
+                    <div className="your-sets-set" key={e.id}>
                         <h2><Link to={`/set/${e.id}`}>{e.name}</Link></h2>
                         <p className="your-sets-set-description">{formatDescription(e.description)}</p>
                         <div className="your-sets-button-and-created-by">

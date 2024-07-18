@@ -1,30 +1,50 @@
-import {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {  useNavigate, useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import './css/Login.css';
-import { useGoToProfileIfAuthenticated } from '../functions/redirections';
-import { API } from '../API';
+import { useGoToProfileIfAuthenticated } from '../functions/redirections.ts';
+import { useDispatch } from 'react-redux';
+import { UserActions } from '../slices/userSlice.ts';
+import { useIsAuthenticated, useIsPending } from '../functions/auth.ts';
+import { AppDispatch } from '../store.ts';
 
 function LoginComponent() {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
 
-    let usernameInput = useRef(null);
-    let passwordInput = useRef(null);
+    const usernameInput = useRef<HTMLInputElement>(null);
+    const passwordInput = useRef<HTMLInputElement>(null);
 
-    let [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const pending = useIsPending();
+    const isAuthenticated = useIsAuthenticated();
     
     useGoToProfileIfAuthenticated(!isLoading);
 
     useEffect(()=>{
         if(!isLoading)
-            passwordInput.current.value = '';
+            passwordInput.current!.value = '';
     },[isLoading]);
 
+    useEffect(()=>{
+        if(!pending && isAuthenticated) {
+            const after_login = searchParams.get('after_login');
+            if(after_login !== null /*&& after_login !== '/profile'*/) {
+                navigate(after_login);
+                return;
+            }
+            navigate('/profile');
+        }
+        setIsLoading(false);
+    }, [pending, isAuthenticated]);
+
     function login() {
-        const after_login = searchParams.get('after_login');
+        /*const after_login = searchParams.get('after_login');
         setIsLoading(true);
 
+        
         API.login(usernameInput.current.value, passwordInput.current.value)
         .then(() => {
             if(after_login !== null && after_login !== '/profile') {
@@ -37,9 +57,15 @@ function LoginComponent() {
         .finally(()=>{
             setIsLoading(false);
         });
+        */
+        setIsLoading(true);
+        dispatch(UserActions.logIn({
+            username: usernameInput.current!.value,
+            password: passwordInput.current!.value
+        }));
     }
 
-    function handleEnter(e) {
+    function loginOnEnter(e) {
         if(e.key === 'Enter') {
             login();
         }
@@ -55,14 +81,14 @@ function LoginComponent() {
                         <td>Username:</td>
                         <td>
                             <input className='login-input input' ref={usernameInput} type="text" 
-                                placeholder='username' onKeyDown={handleEnter}/>
+                                placeholder='username' onKeyDown={loginOnEnter}/>
                         </td>
                     </tr>
                     <tr>
                         <td>Password:</td>
                         <td>
                             <input className='login-input input' ref={passwordInput} type="password" placeholder='password'
-                                onKeyDown={handleEnter}/>
+                                onKeyDown={loginOnEnter}/>
                         </td>
                     </tr>
                 </tbody>
@@ -75,8 +101,5 @@ function LoginComponent() {
         </>
     );
 }
-
-
-
 
 export default LoginComponent;

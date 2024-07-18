@@ -1,15 +1,15 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import './css/Set.css';
-import { useEffectOnLoadUserData } from "../functions/useEffectOnLoadUserData";
-import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
-import { useIsAuthenticated } from "../functions/auth";
-import LearnComponent from "./LearnComponent";
-import { API } from "../API";
+import { useEffectOnLoadUserData } from "../functions/useEffectOnLoadUserData.ts";
+import { useGoToLoginIfNotAuthenticated } from "../functions/redirections.ts";
+import { useIsAuthenticated } from "../functions/auth.ts";
+import LearnComponent from "./LearnComponent.tsx";
+import { API } from "../API.js";
 
 export default function SetComponent() {
     const {id} = useParams();
-    const [set, setSet] = useState(null);
+    const [set, setSet] = useState<any>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isLearning, setIsLearning] = useState(false);
     const navigate = useNavigate();
@@ -34,14 +34,13 @@ export default function SetComponent() {
     }
      
     function datetimeFormat() {
-        let res = set.create_datetime.split('.')[0];
+        let res = set!.create_datetime.split('.')[0];
         res = res.split('T').join(' ');
         return res;
     }
 
     function removeSet() {
         API.removeSet(set.id).then(()=>{
-            //navigate('/sets/your');
             setSet(prev => ({...prev, is_your_one:false}));
         });
     }
@@ -53,17 +52,6 @@ export default function SetComponent() {
             setSet(prev => ({...prev, is_your_one:true}));
         });
     }
-    /*
-    function addRemoveSet(e) {
-        e.preventDefault();
-        if(e.target.checked) {
-            addSet();
-        }
-        else {
-            removeSet();
-        }
-    }*/
-
 
     if(isLoading) return "Loading...";
 

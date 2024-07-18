@@ -1,22 +1,22 @@
-import { useEffect, useRef, useState } from "react";
-import { API } from "../API";
+import React, { useEffect, useRef, useState } from "react";
+import { API } from "../API.js";
 import { useParams } from "react-router-dom";
-import AddCardComponent from "./AddCardComponent";
-import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
+import AddCardComponent from "./AddCardComponent.tsx";
+import { useGoToLoginIfNotAuthenticated } from "../functions/redirections.ts";
 import './css/EditSet.css';
 
 export default function EditSetComponent() {
-    const [set, setSet] = useState(null);
-    const [cards, setCards] = useState([]);
+    const [set, setSet] = useState<any>(null);
+    const [cards, setCards] = useState<any[]>([]);
     const {id} = useParams();
 
     const [isLoading, setIsLoading] = useState(true);
     const [message, setMessage] = useState('');
-    const [visibilityChoices, setVisibilityChoices] = useState([]);
+    const [visibilityChoices, setVisibilityChoices] = useState<any[]>([]);
 
-    const nameInput = useRef(null);
-    const descriptionInput = useRef(null);
-    const visibilityInput = useRef(null);
+    const nameInput = useRef<HTMLInputElement>(null);
+    const descriptionInput = useRef<HTMLTextAreaElement>(null);
+    const visibilityInput = useRef<HTMLSelectElement>(null);
 
     useGoToLoginIfNotAuthenticated();
 
@@ -36,9 +36,9 @@ export default function EditSetComponent() {
 
     function editSet() {
         const newSet = {
-            name: nameInput.current.value,
-            description: descriptionInput.current.value,
-            visibility: visibilityInput.current.value
+            name: nameInput.current!.value,
+            description: descriptionInput.current!.value,
+            visibility: visibilityInput.current!.value
         };
         setSet(newSet);
         API.editSet(id, newSet.name, newSet.description, newSet.visibility).then(()=> {
@@ -47,9 +47,9 @@ export default function EditSetComponent() {
             if(status === 403)
                 setMessage(data.message);
             else {
-                setMessage(Object.entries(data.errors).map(([k, v]) => {
-                    return k + ': ' + v + '; ';
-                }));
+                setMessage((Object.entries(data.errors as any[]) as [string, string][]).reduce((acc, [k, v]) => {
+                    return [acc + k + ': ' + v + '; ', ''] as const;
+                })[0]);
             }
         });
     }
@@ -106,7 +106,7 @@ export default function EditSetComponent() {
                 <button className="shadow-button" onClick={editSet}>Apply</button>
             </div>
             <div>{message}</div>
-            <hr width='90%' color='30, 30, 30' />
+            <hr style={{width:'90%'}} color='30, 30, 30' />
             
             <AddCardComponent setCards={setCards}/>
             {cards.length > 0 &&

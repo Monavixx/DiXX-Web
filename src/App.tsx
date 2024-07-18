@@ -1,25 +1,26 @@
 
 import './App.css';
-import LoginComponent from './components/LoginComponent.jsx';
+import LoginComponent from './components/LoginComponent.tsx';
 import {Routes, Route, useLocation, useNavigate} from 'react-router-dom';
-import Header from './components/Header.jsx';
-import { useEffect } from 'react';
+import Header from './components/Header.tsx';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Profile from './components/Profile.jsx';
-import SignUpComponent from './components/SignUpComponent.jsx';
-import YourSetsComponent from './components/YourSetsComponent.jsx';
-import SetComponent from './components/SetComponent.jsx';
-import { API } from './API.js';
-import { updateLocation } from './slices/locationReduces.js';
-import {useDidUpdateEffect} from './functions/useDidUpdateEffects.js';
-import CreateNewSetComponent from './components/CreateNewSetComponent.jsx';
-import EditSetComponent from './components/EditSetComponent.jsx';
-import FriendsComponent from './components/friends/FriendsComponent.jsx';
+import Profile from './components/Profile.tsx';
+import SignUpComponent from './components/SignUpComponent.tsx';
+import YourSetsComponent from './components/YourSetsComponent.tsx';
+import SetComponent from './components/SetComponent.tsx';
+import { updateLocation } from './slices/locationSlice.ts';
+import {useDidUpdateEffect} from './functions/useDidUpdateEffects.ts';
+import CreateNewSetComponent from './components/CreateNewSetComponent.tsx';
+import EditSetComponent from './components/EditSetComponent.tsx';
+import FriendsComponent from './components/friends/FriendsComponent.tsx';
+import { UserActions } from './slices/userSlice.ts';
+import { AppDispatch } from './store.ts';
 
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
-  const locationState = useSelector(state=> state.location.navigatePathname);
+  const locationState = useSelector<any, string>(state => state.location.navigatePathname);
   const navigate = useNavigate();
   
   useDidUpdateEffect(()=>{
@@ -62,10 +63,11 @@ function App() {
 
 
 function AutoLoginComponent() {
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(()=>{
-    API.checkForLogin();
-  }, []);
+    dispatch(UserActions.checkIfLoggedIn());
+  }, [dispatch]);
   return null;
 }
 

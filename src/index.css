@@ -24,6 +24,7 @@ html {
 
 /* OOCSS */
 
+
 .shadow-button {
   box-shadow: -1px 2px 5px black;
 }
@@ -38,6 +39,7 @@ html {
 
 .scaled-button {
   transform: scale(1);
+  transition: transform 0.1s;
 }
 .scaled-button:hover {
   transform: scale(1.05);

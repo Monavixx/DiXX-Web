@@ -1,23 +1,23 @@
-import { store } from "./index.jsx";
-import { get_request_json, post_request_json, put_request_json } from "./functions/send_request";
-import { loginAction, logoutAction, pending } from "./slices/userReducer.js";
+import { store } from "./store.ts";
+import { get_request_json, post_request_json, put_request_json } from "./functions/send_request.ts";
+import { UserActions } from "./slices/userSlice.ts";
 
 export const API = {
-    checkForLogin: async ()=> {
-        store.dispatch(pending(true));
+    checkForLogin: async ()=> { //////////////////// +
+        store.dispatch(UserActions.pending(true));
         if(localStorage.getItem('token') === null) {
-          store.dispatch(logoutAction());
+          store.dispatch(UserActions.logoutAction());
           return;
         }
         const [data, status] = await get_request_json('login/');
         if(status === 200) {
-            store.dispatch(loginAction({
+            store.dispatch(UserActions.loginAction({
               name:data.data.username,
               email:data.data.email
             }));
         }
         else {
-          store.dispatch(logoutAction());
+          store.dispatch(UserActions.logoutAction());
         }
     },
     createNewSet: async({name, description, visibility}) => {
@@ -43,33 +43,34 @@ export const API = {
       return await get_request_json(`cards/set/${setId}/random-learn/`);
     },
     /**This function returns a promise. Resolve if success authentication, reject if not. */
-    login: async(username, password)=> {
+    login: async(username, password)=> { /////////////// +
 
-      store.dispatch(pending(true));
+      store.dispatch(UserActions.pending(true));
       const [data, status] = await post_request_json('login/',{username:username, password:password});
       
       return new Promise((resolve, reject) => {
         if(status === 200) {
-          store.dispatch(loginAction({name:data.data.username,
+          store.dispatch(UserActions.loginAction({
+            name:data.data.username,
             email:data.data.email
           }));
           localStorage.setItem('token', data.data.token);
           resolve([data, status]);
         }
         else {
-          store.dispatch(pending(false));
+          store.dispatch(UserActions.pending(false));
           reject([data, status]);
         }
       });
     },
 
-    regenerateToken: async()=>{
-      store.dispatch(pending(true));
+    regenerateToken: async()=>{ ////////////////// +
+      store.dispatch(UserActions.pending(true));
       const [data,status] = await get_request_json('regenerate-token/');
       if(status === 200) {
         localStorage.setItem('token', data.data.token);
       }
-      store.dispatch(pending(false));
+      store.dispatch(UserActions.pending(false));
     },
 
     __getSet: async(id, fields = []) => {
@@ -153,7 +154,7 @@ export const API = {
     },
 
     getYourSets: async() => {
-      const [data, status] = await get_request_json('cards/sets/my/');
+      const [data, status] = await get_request_json('cards/sets/my/', store.dispatch);
       return new Promise((resolve, reject) => {
         if(status === 200)
           resolve([data, status]);
@@ -197,5 +198,17 @@ export const API = {
 
     getFriends: async() => {
       return get_request_json('friends/list/');
+    },
+
+    getFriendRequests: async() => {
+      return get_request_json('friends/requests/');
+    },
+
+    findPeople: async(username) => {
+      return get_request_json('friends/find-people/', {'username': username});
+    },
+
+    unfriend: async(username) => {
+      return post_request_json('friends/unfriend/', {'username': username});
     }
 }

@@ -1,16 +1,16 @@
-import { useEffect, useRef, useState } from "react";
-import { API } from "../API";
+import React, { useEffect, useRef, useState } from "react";
+import { API } from "../API.js";
 import { useNavigate } from "react-router-dom";
-import { useGoToLoginIfNotAuthenticated } from "../functions/redirections";
+import { useGoToLoginIfNotAuthenticated } from "../functions/redirections.ts";
 import './css/CreateNewSet.css';
 
 export default function CreateNewSetComponent() {
-    const nameInput = useRef(null);
-    const descriptionInput = useRef(null);
-    const visibilityInput = useRef(null);
+    const nameInput = useRef<HTMLInputElement>(null);
+    const descriptionInput = useRef<HTMLTextAreaElement>(null);
+    const visibilityInput = useRef<HTMLSelectElement>(null);
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
-    const [data, setData] = useState(null);
+    const [data, setData] = useState<any>(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useGoToLoginIfNotAuthenticated();
@@ -24,15 +24,15 @@ export default function CreateNewSetComponent() {
     
     function createNewSet() {
         API.createNewSet({
-            name: nameInput.current.value,
-            description: descriptionInput.current.value,
-            visibility: visibilityInput.current.value
+            name: nameInput.current!.value,
+            description: descriptionInput.current!.value,
+            visibility: visibilityInput.current!.value
         }).then(([data]) => {
             navigate(`/set/${data.data.id}`);
         }).catch(([data]) => {
-            setMessage(Object.entries(data.errors).map(([k, v])=>{
-                return k + ': ' + v + '; ';
-            }));
+            setMessage((Object.entries(data.errors) as [string, string][]).reduce((acc, [k, v])=>{
+                return [acc + k + ': ' + v + '; ', ''] as const;
+            })[0]);
         });
     }
 
@@ -59,7 +59,7 @@ export default function CreateNewSetComponent() {
                                 <td>Visibility:</td>
                                 <td>
                                     <select className="input" ref={visibilityInput}>
-                                        {!isLoading && data.visibility_choices.map(([v, s]) => {
+                                        {!isLoading && data!.visibility_choices.map(([v, s]) => {
                                             return <option key={v} value={v}>{s}</option>
                                         })}
                                     </select>

@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 
-export function useDidUpdateEffect(fn, inputs) {
+export function useDidUpdateEffect(fn, inputs:any[]) {
     const isMountingRef = useRef(false);
   
     useEffect(() => {
@@ -15,7 +15,7 @@ export function useDidUpdateEffect(fn, inputs) {
       } // eslint-disable-next-line
     }, inputs);
 }
-export function useDidUpdateLayoutEffect(fn, inputs) {
+export function useDidUpdateLayoutEffect(fn, inputs?:any[]) {
   const isMountingRef = useRef(false);
 
   useLayoutEffect(() => {

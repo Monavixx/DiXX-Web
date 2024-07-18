@@ -2,29 +2,30 @@ import { useSelector } from 'react-redux';
 import './css/Header.css';
 import {Link, useLocation} from 'react-router-dom';
 import React, {useRef, useEffect} from 'react';
-import { API_URL } from '../settings.js';
-import { useIsAuthenticated } from '../functions/auth.js';
+import { API_URL } from '../settings.ts';
+import { useIsAuthenticated, useIsPending } from '../functions/auth.ts';
 import Hammer from 'hammerjs';
+import { RootState } from '../store.ts';
 
 export default function Header() {
-    const username = useSelector(state=>state.user.name);
+    const username = useSelector<RootState, string>(state=>state.user.name);
     const is_authenticated = useIsAuthenticated();
-    const isUserDataPending = useSelector(state=>state.user.is_pending);
-    const menu = useRef(null);
-    const menuButton = useRef(null);
-    const timeoutId = useRef(null);
+    const isUserDataPending = useIsPending();
+    const menu = useRef<HTMLDivElement>(null);
+    const menuButton = useRef<HTMLDivElement>(null);
+    const timeoutId = useRef<number|null>(null);
     const location = useLocation();
 
     useEffect(()=>{
         document.onclick = (e) =>{
-            if(!menu.current.contains(e.target) && !menuButton.current.contains(e.target))
+            if(!menu.current!.contains(e.target as Node|null) && !menuButton.current!.contains(e.target as Node|null))
                 toggleMenuButton(false);
         };
         // Menu swipe
-        const hammer = new Hammer(menu.current);
+        const hammer = new Hammer(menu.current!) as any;
 
         function handleSwipe(e) {
-            if(e.direction === Hammer.DIRECTION_LEFT) {
+            if(e.direction === (Hammer as any).DIRECTION_LEFT) {
                 toggleMenuButton(false);
             }
         }
@@ -46,7 +47,7 @@ export default function Header() {
     useEffect(()=>{
         for(let v of document.getElementsByClassName('menu-ref')) {
             if(location.pathname
-                === v.firstChild.href.slice(API_URL.length)) {
+                === (v!.firstChild as HTMLAnchorElement)!.href.slice(API_URL.length)) {
                 v.classList.add('menu-active-ref');
             }
             else {
@@ -55,28 +56,28 @@ export default function Header() {
         };
     },[location]);
 
-    function toggleMenuButton(force=null) {
-        if((menuButton.current.classList.contains('header-menu-button-toggle-off') || force===true) && force !== false) {
-            menuButton.current.classList.remove('header-menu-button-toggle-off');
-            menuButton.current.classList.add('header-menu-button-toggle-on');
-            menu.current.style.display = 'flex';
-            menu.current.classList.remove('menu-toggle-off');
-            clearTimeout(timeoutId);
+    function toggleMenuButton(force:boolean|null=null) {
+        if((menuButton.current!.classList.contains('header-menu-button-toggle-off') || force===true) && force !== false) {
+            menuButton.current!.classList.remove('header-menu-button-toggle-off');
+            menuButton.current!.classList.add('header-menu-button-toggle-on');
+            menu.current!.style.display = 'flex';
+            menu.current!.classList.remove('menu-toggle-off');
+            clearTimeout(timeoutId.current!);
         }
-        else if (!menuButton.current.classList.contains('header-menu-button-toggle-off') || force===false){
-            menuButton.current.classList.add('header-menu-button-toggle-off');
-            menuButton.current.classList.remove('header-menu-button-toggle-on');
-            menu.current.classList.add('menu-toggle-off');
+        else if (!menuButton.current!.classList.contains('header-menu-button-toggle-off') || force===false){
+            menuButton.current!.classList.add('header-menu-button-toggle-off');
+            menuButton.current!.classList.remove('header-menu-button-toggle-on');
+            menu.current!.classList.add('menu-toggle-off');
 
             //Here the ms timeout must be the same as in css
-            timeoutId.current = setTimeout(()=>{menu.current.style.display = 'none'},300);
+            timeoutId.current = setTimeout(()=>{menu.current!.style.display = 'none'},300);
         }
     }
 
     return (
         <>
         <div className="header" >
-            <div ref={menuButton} className="scaled-button header-menu-button header-menu-button-toggle-off" onClick={toggleMenuButton}>
+            <div ref={menuButton} className="scaled-button header-menu-button header-menu-button-toggle-off" onClick={()=>toggleMenuButton()}>
                 <div></div>
                 <div></div>
                 <div></div>

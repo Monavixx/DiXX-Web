@@ -1,6 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-const ReloadContext = createContext();
+const ReloadContext = createContext<(()=>void) | null>(null);
 
 export function useReload() {
     return useContext(ReloadContext);
@@ -19,7 +19,7 @@ export default function ReloadProvider({children}) {
 export function GlobalFunctionComponent() {
     const reloadPage = useReload();
     useEffect(()=>{
-        window.reloadPage = reloadPage;
+        window['reloadPage'] = reloadPage;
     }, [reloadPage]);
     return null;
 }

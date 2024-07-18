@@ -1,9 +1,10 @@
 import { useEffect, useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
+import { RootState } from "../store.ts";
 
 
-export function useEffectOnLoadUserData(fn, inputs=[]) {
-    const isUserDataPending = useSelector(state=>state.user.is_pending);
+export function useEffectOnLoadUserData(fn, inputs:any[]=[]) {
+    const isUserDataPending = useSelector<RootState>(state=>state.user.is_pending);
 
     useEffect(()=>{
         if(!isUserDataPending) {
@@ -13,8 +14,8 @@ export function useEffectOnLoadUserData(fn, inputs=[]) {
     }, [...inputs, isUserDataPending]);
 }
 
-export function useLayoutEffectOnLoadUserData(fn, inputs=[]) {
-    const isUserDataPending = useSelector(state=>state.user.is_pending);
+export function useLayoutEffectOnLoadUserData(fn, inputs:any[]=[]) {
+    const isUserDataPending = useSelector<RootState>(state=>state.user.is_pending);
 
     useLayoutEffect(()=>{
         if(!isUserDataPending) {

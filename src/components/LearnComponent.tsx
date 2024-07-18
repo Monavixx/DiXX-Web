@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { API } from "../API";
 import './css/Learn.css';
 
@@ -6,16 +6,16 @@ import './css/Learn.css';
 
 export default function LearnComponent({setId}) {
     const [isBack, setIsBack] = useState(false);
-    const [card, setCard] = useState(null);
-    const cardDiv = useRef(null);
+    const [card, setCard] = useState<any>(null);
+    const cardDiv = useRef<HTMLDivElement>(null);
 
-    let timeoutIdToggleSide = null;
+    let timeoutIdToggleSide: number|null = null;
 
     function toggleSide() {
-        clearTimeout(timeoutIdToggleSide);
+        clearTimeout(timeoutIdToggleSide!);
         timeoutIdToggleSide = null;
 
-        cardDiv.current.classList.toggle('card-learn-back');
+        cardDiv.current!.classList.toggle('card-learn-back');
         timeoutIdToggleSide = setTimeout(() => {
             setIsBack(prev=>!prev);
         }, 250);

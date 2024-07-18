@@ -1,6 +1,6 @@
 import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
-import { useIsAuthenticated } from "./auth";
-import { useLayoutEffectOnLoadUserData } from "./useEffectOnLoadUserData";
+import { useIsAuthenticated } from "./auth.ts";
+import { useLayoutEffectOnLoadUserData } from "./useEffectOnLoadUserData.ts";
 
 
 export function useGoToLoginIfNotAuthenticated() {
